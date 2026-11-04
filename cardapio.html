@@ -1,0 +1,2505 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#354638">
+<title>meetcoffe — Menu Experience</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500&display=swap" rel="stylesheet">
+
+<style>
+/* ==========================================================
+   1. VARIÁVEIS E RESET — IDENTIDADE MEETCOFFE
+   ========================================================== */
+:root {
+  /* Paleta Principal */
+  --green-moss: #354638;
+  --green-olive: #66745A;
+  --green-sage: #A5AD98;
+  --cream: #F5F1E8;
+  --sand: #E5DCCB;
+  --coffee: #574538;
+  --warm-white: #FCFAF5;
+
+  /* Variáveis de Sistema */
+  --background: var(--cream);
+  --surface: var(--warm-white);
+  --text: var(--green-moss);
+  --muted: var(--coffee);
+  --line: var(--sand);
+  --accent: var(--green-moss);
+  --dark: var(--green-moss);
+  --green: var(--green-moss);
+  --green-soft: #E8EDE7;
+
+  --bottom-bar-h: 72px;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  background: var(--background);
+  color: var(--text);
+  font-family: 'DM Sans', sans-serif;
+  overflow: hidden;
+  height: 100vh;
+  height: 100dvh;
+  display: flex;
+  flex-direction: column;
+}
+
+button {
+  font: inherit;
+  cursor: pointer;
+}
+
+img {
+  display: block;
+}
+
+/* ==========================================================
+   2. SPLASH SCREEN (ETAPA 1)
+   ========================================================== */
+.splash-screen {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background-color: var(--green-moss);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.8s ease, visibility 0.8s ease;
+}
+
+.splash-screen.hidden {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.splash-logo {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(3.5rem, 8vw, 6.5rem);
+  color: var(--cream);
+  letter-spacing: 0.02em;
+  margin-bottom: 0.5rem;
+  opacity: 0;
+  transform: translateY(20px);
+  animation: splashLogoIn 1.2s cubic-bezier(0.2, 0.8, 0.2, 1) 0.3s forwards;
+}
+
+.splash-subtitle {
+  font-family: 'DM Sans', sans-serif;
+  color: var(--green-sage);
+  font-size: 0.85rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  opacity: 0;
+  animation: splashSubIn 1.2s ease 0.8s forwards;
+}
+
+@keyframes splashLogoIn {
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes splashSubIn {
+  to { opacity: 1; }
+}
+
+/* ==========================================================
+   3. TUTORIAL OVERLAY (ETAPA 2)
+   ========================================================== */
+.intro-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  background: rgba(53, 70, 56, 0.92);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.5s ease, visibility 0.5s ease;
+}
+
+.intro-overlay.open {
+  opacity: 1;
+  visibility: visible;
+}
+
+.tutorial-card {
+  background: var(--warm-white);
+  border-radius: 20px;
+  width: 100%;
+  max-width: 440px;
+  padding: 36px 28px 28px;
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.25);
+  position: relative;
+  transform: translateY(20px);
+  transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.intro-overlay.open .tutorial-card {
+  transform: translateY(0);
+}
+
+.tutorial-slide {
+  display: none;
+  text-align: center;
+  animation: fadeInSlide 0.4s ease forwards;
+}
+
+.tutorial-slide.active {
+  display: block;
+}
+
+@keyframes fadeInSlide {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.tutorial-icon {
+  width: 64px;
+  height: 64px;
+  margin: 0 auto 20px;
+  background: var(--green-soft);
+  color: var(--green-moss);
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+}
+
+.tutorial-icon svg {
+  width: 28px;
+  height: 28px;
+}
+
+.tutorial-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 26px;
+  font-weight: 600;
+  color: var(--green-moss);
+  margin-bottom: 12px;
+  line-height: 1.2;
+}
+
+.tutorial-text {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  color: var(--coffee);
+  line-height: 1.6;
+  margin-bottom: 28px;
+}
+
+.tutorial-progress {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 28px;
+}
+
+.progress-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--sand);
+  transition: background 0.3s ease, transform 0.3s ease;
+}
+
+.progress-dot.active {
+  background: var(--green-moss);
+  transform: scale(1.2);
+}
+
+.tutorial-btn {
+  width: 100%;
+  padding: 18px;
+  background: var(--green-moss);
+  color: var(--cream);
+  border: none;
+  border-radius: 99px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.tutorial-btn:hover {
+  background: var(--green-olive);
+}
+
+.tutorial-btn:active {
+  transform: scale(0.98);
+}
+
+.tutorial-skip {
+  display: block;
+  margin-top: 20px;
+  text-align: center;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 12px;
+  color: var(--green-sage);
+  text-decoration: underline;
+  cursor: pointer;
+  background: none;
+  border: none;
+  width: 100%;
+  transition: color 0.2s ease;
+}
+
+.tutorial-skip:hover {
+  color: var(--green-olive);
+}
+
+/* ==========================================================
+   4. HEADER
+   ========================================================== */
+.header {
+  flex: 0 0 auto;
+  position: relative;
+  z-index: 50;
+  background: rgba(245, 241, 232, 0.94);
+  backdrop-filter: blur(18px);
+  border-bottom: 1px solid var(--line);
+}
+
+.header-content {
+  max-width: 1440px;
+  margin: auto;
+  padding: 15px 5%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.logo-icon {
+  display: none; /* Removido para dar lugar ao logotipo tipográfico */
+}
+
+.logo-name {
+  font-family: 'Playfair Display', serif;
+  font-size: 26px;
+  letter-spacing: 1px;
+  color: var(--green-moss);
+  line-height: 1.1;
+}
+
+.logo-subtitle {
+  font-size: 9px;
+  color: var(--green-olive);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  font-weight: 600;
+  margin-top: 2px;
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.header-info {
+  color: var(--coffee);
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+.header-info span {
+  color: var(--green-moss);
+  margin-right: 6px;
+}
+
+/* Botão da sacola */
+.bag-button {
+  position: relative;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 1px solid var(--line);
+  background: var(--warm-white);
+  color: var(--green-moss);
+  display: grid;
+  place-items: center;
+  transition: .25s;
+}
+
+.bag-button:hover {
+  background: var(--green-moss);
+  color: var(--cream);
+  border-color: var(--green-moss);
+}
+
+.bag-button:active {
+  transform: scale(.94);
+}
+
+.bag-count {
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  min-width: 20px;
+  height: 20px;
+  padding: 0 4px;
+  border-radius: 999px;
+  background: var(--coffee);
+  color: var(--cream);
+  font-size: 10px;
+  font-weight: 700;
+  display: none;
+  place-items: center;
+  line-height: 1;
+  border: 2px solid var(--warm-white);
+}
+
+.bag-count.visible {
+  display: grid;
+}
+
+/* ==========================================================
+   5. CATEGORIAS
+   ========================================================== */
+.category-wrapper {
+  max-width: 1440px;
+  margin: auto;
+  padding: 0 5% 12px;
+}
+
+.categories {
+  display: flex;
+  gap: 28px;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.categories::-webkit-scrollbar {
+  display: none;
+}
+
+.category {
+  background: transparent;
+  border: 0;
+  color: var(--green-olive);
+  white-space: nowrap;
+  padding: 9px 0;
+  font-size: 12px;
+  font-weight: 600;
+  position: relative;
+  transition: .25s;
+}
+
+.category.active {
+  color: var(--green-moss);
+}
+
+.category.active::after {
+  content: "";
+  height: 2px;
+  background: var(--green-moss);
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+}
+
+/* ==========================================================
+   6. ÁREA PRINCIPAL (FEED / LISTA)
+   ========================================================== */
+.main {
+  flex: 1 1 auto;
+  min-height: 0;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ---------- 6.1 MODO EXPERIÊNCIA (FEED) ---------- */
+.feed-view {
+  flex: 1 1 auto;
+  min-height: 0;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.feed-view.hidden {
+  display: none;
+}
+
+.feed {
+  position: relative;
+  width: 100%;
+  max-width: 1440px;
+  height: 100%;
+  overflow: hidden;
+}
+
+.product {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 7%;
+  padding: 26px 7% 38px;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(25px);
+  transition: .4s ease;
+}
+
+.product.active {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+/* Mídias */
+.media-container {
+  position: relative;
+  height: 100%;
+  min-height: 0;
+  overflow: hidden;
+  border-radius: 12px;
+  background: var(--sand);
+}
+
+.media-track {
+  display: flex;
+  height: 100%;
+  width: 100%;
+  transition: transform .45s cubic-bezier(.2, .75, .25, 1);
+}
+
+.media-item {
+  min-width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.media-item img,
+.media-item video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.media-indicators {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  right: 20px;
+  display: flex;
+  gap: 5px;
+  z-index: 5;
+}
+
+.indicator {
+  flex: 1;
+  height: 3px;
+  background: rgba(255, 255, 255, .45);
+  border-radius: 2px;
+}
+
+.indicator.active {
+  background: white;
+}
+
+.media-label {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  color: white;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  z-index: 5;
+  text-shadow: 0 1px 8px #0008;
+}
+
+/* Informações do produto */
+.product-information {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-right: 5%;
+}
+
+.eyebrow {
+  font-size: 10px;
+  color: var(--green-olive);
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  font-weight: 700;
+  margin-bottom: 22px;
+}
+
+.product-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(35px, 5vw, 66px);
+  font-weight: 500;
+  line-height: 1.08;
+  margin-bottom: 18px;
+  letter-spacing: -1px;
+  color: var(--green-moss);
+}
+
+.product-description {
+  max-width: 390px;
+  color: var(--coffee);
+  font-size: 14px;
+  line-height: 1.9;
+  margin-bottom: 32px;
+}
+
+.product-price {
+  font-family: 'Playfair Display', serif;
+  font-size: 29px;
+  margin-bottom: 28px;
+  color: var(--green-moss);
+}
+
+.product-actions {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.order-button {
+  background: var(--green-moss);
+  color: var(--cream);
+  border: 1px solid var(--green-moss);
+  padding: 16px 29px;
+  font-size: 11px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  transition: .3s;
+  border-radius: 99px;
+}
+
+.order-button:hover {
+  background: var(--green-olive);
+  border-color: var(--green-olive);
+}
+
+.order-button.in-cart {
+  background: var(--green-olive);
+  border-color: var(--green-olive);
+}
+
+.favorite-button {
+  width: 48px;
+  height: 48px;
+  background: transparent;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  font-size: 20px;
+  color: var(--green-moss);
+  transition: .25s;
+  display: grid;
+  place-items: center;
+}
+
+.favorite-button:hover {
+  border-color: var(--green-moss);
+}
+
+.favorite-button.liked {
+  color: #B66B65;
+  border-color: #B66B65;
+}
+
+.product-number {
+  margin-top: 55px;
+  color: var(--green-olive);
+  font-size: 11px;
+  letter-spacing: 2px;
+}
+
+/* Navegação (setas) */
+.navigation {
+  position: absolute;
+  right: 5%;
+  bottom: 26px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  z-index: 10;
+}
+
+.nav-button {
+  width: 42px;
+  height: 42px;
+  border: 1px solid var(--line);
+  background: var(--warm-white);
+  font-size: 17px;
+  color: var(--green-moss);
+  transition: .25s;
+  border-radius: 50%;
+}
+
+.nav-button:hover {
+  background: var(--green-moss);
+  color: var(--cream);
+  border-color: var(--green-moss);
+}
+
+.nav-button:active {
+  transform: scale(.94);
+}
+
+.navigation-label {
+  font-size: 10px;
+  color: var(--green-olive);
+  margin: 0 8px;
+}
+
+/* Estado vazio */
+.empty-state {
+  display: none;
+  position: absolute;
+  inset: 0;
+  align-items: center;
+  justify-content: center;
+  color: var(--coffee);
+  font-size: 13px;
+}
+
+/* ---------- 6.2 MODO LISTA ---------- */
+.list-view {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  padding: 24px 5% 36px;
+  display: none;
+}
+
+.list-view.active {
+  display: block;
+}
+
+.list-grid {
+  max-width: 1440px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 22px;
+}
+
+.list-card {
+  background: var(--warm-white);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: transform .3s ease, box-shadow .3s ease;
+}
+
+.list-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 16px 34px rgba(53, 70, 56, .08);
+}
+
+.card-media {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  background: var(--sand);
+}
+
+.card-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform .7s cubic-bezier(.2, .75, .25, 1);
+}
+
+.list-card:hover .card-media img {
+  transform: scale(1.05);
+}
+
+.card-fav {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: 0;
+  background: rgba(252, 250, 245, .92);
+  color: var(--green-moss);
+  font-size: 15px;
+  display: grid;
+  place-items: center;
+  backdrop-filter: blur(4px);
+  transition: .25s;
+}
+
+.card-fav:hover {
+  transform: scale(1.08);
+}
+
+.card-fav.liked {
+  color: #B66B65;
+}
+
+.card-body {
+  padding: 16px 18px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  flex: 1 1 auto;
+}
+
+.card-category {
+  font-size: 9px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--green-olive);
+  font-weight: 700;
+}
+
+.card-name {
+  font-family: 'Playfair Display', serif;
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 1.2;
+  color: var(--green-moss);
+}
+
+.card-desc {
+  font-size: 12px;
+  color: var(--coffee);
+  line-height: 1.6;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.card-footer {
+  margin-top: auto;
+  padding-top: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.card-price {
+  font-family: 'Playfair Display', serif;
+  font-size: 18px;
+  white-space: nowrap;
+  color: var(--green-moss);
+}
+
+.card-action {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  min-height: 36px;
+}
+
+.card-add {
+  background: var(--green-moss);
+  color: var(--cream);
+  border: 1px solid var(--green-moss);
+  padding: 10px 18px;
+  font-size: 10px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  border-radius: 99px;
+  transition: .25s;
+  white-space: nowrap;
+}
+
+.card-add:hover {
+  background: var(--green-olive);
+  border-color: var(--green-olive);
+}
+
+.card-add:active {
+  transform: scale(.96);
+}
+
+.stepper {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  background: var(--green-moss);
+  border-radius: 99px;
+  padding: 4px;
+  color: var(--cream);
+}
+
+.stepper button {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  border: 0;
+  background: transparent;
+  color: var(--cream);
+  font-size: 15px;
+  line-height: 1;
+  display: grid;
+  place-items: center;
+  transition: .2s;
+}
+
+.stepper button:hover {
+  background: rgba(255, 255, 255, .18);
+}
+
+.stepper span {
+  min-width: 20px;
+  text-align: center;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.list-empty {
+  text-align: center;
+  color: var(--coffee);
+  font-size: 13px;
+  padding: 60px 0;
+}
+
+/* ==========================================================
+   7. BARRA INFERIOR FIXA (ALTERNADOR DE MODOS)
+   ========================================================== */
+.bottom-bar {
+  flex: 0 0 auto;
+  z-index: 60;
+  background: rgba(245, 241, 232, 0.96);
+  backdrop-filter: blur(18px);
+  border-top: 1px solid var(--line);
+  padding: 9px 5% calc(9px + env(safe-area-inset-bottom));
+}
+
+.mode-switch {
+  max-width: 430px;
+  margin: 0 auto;
+  display: flex;
+  gap: 5px;
+  background: var(--sand);
+  border-radius: 999px;
+  padding: 5px;
+}
+
+.mode-button {
+  flex: 1 1 0;
+  border: 0;
+  background: transparent;
+  color: var(--green-olive);
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  padding: 11px 8px;
+  border-radius: 999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  transition: background .28s, color .28s, box-shadow .28s, transform .2s;
+}
+
+.mode-button svg {
+  flex: 0 0 auto;
+}
+
+.mode-button:not(.active):hover {
+  color: var(--green-moss);
+}
+
+.mode-button:active {
+  transform: scale(.98);
+}
+
+.mode-button.active {
+  background: var(--green-moss);
+  color: var(--cream);
+  box-shadow: 0 4px 14px rgba(53, 70, 56, .2);
+}
+
+/* ==========================================================
+   8. SACOLA (DRAWER)
+   ========================================================== */
+.drawer-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 90;
+  background: rgba(53, 70, 56, .45);
+  backdrop-filter: blur(2px);
+  opacity: 0;
+  visibility: hidden;
+  transition: .3s;
+}
+
+.drawer-overlay.open {
+  opacity: 1;
+  visibility: visible;
+}
+
+.cart-drawer {
+  position: fixed;
+  top: 0;
+  right: 0;
+  z-index: 95;
+  width: 100%;
+  max-width: 400px;
+  height: 100vh;
+  height: 100dvh;
+  background: var(--background);
+  display: flex;
+  flex-direction: column;
+  transform: translateX(100%);
+  transition: transform .38s cubic-bezier(.2, .75, .25, 1);
+  box-shadow: -20px 0 50px rgba(0, 0, 0, .12);
+}
+
+.cart-drawer.open {
+  transform: translateX(0);
+}
+
+.cart-header {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 22px 22px 16px;
+  border-bottom: 1px solid var(--line);
+}
+
+.cart-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 22px;
+  letter-spacing: .3px;
+  color: var(--green-moss);
+}
+
+.cart-subtitle {
+  font-size: 11px;
+  color: var(--coffee);
+  margin-top: 3px;
+  letter-spacing: .5px;
+}
+
+.cart-close {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1px solid var(--line);
+  background: transparent;
+  color: var(--green-moss);
+  font-size: 13px;
+  display: grid;
+  place-items: center;
+  transition: .25s;
+}
+
+.cart-close:hover {
+  background: var(--green-moss);
+  color: var(--cream);
+  border-color: var(--green-moss);
+}
+
+.cart-body {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  padding: 16px 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.cart-empty {
+  margin: auto;
+  text-align: center;
+  color: var(--coffee);
+  font-size: 13px;
+  line-height: 1.8;
+  padding: 40px 10px;
+}
+
+.cart-empty strong {
+  display: block;
+  font-family: 'Playfair Display', serif;
+  font-size: 19px;
+  color: var(--green-moss);
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+
+.cart-item {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--line);
+}
+
+.cart-item:last-child {
+  border-bottom: 0;
+  padding-bottom: 0;
+}
+
+.cart-thumb {
+  width: 58px;
+  height: 58px;
+  border-radius: 8px;
+  object-fit: cover;
+  flex: 0 0 auto;
+  background: var(--sand);
+}
+
+.cart-item-info {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.cart-item-name {
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1.3;
+  color: var(--green-moss);
+}
+
+.cart-item-price {
+  font-size: 11px;
+  color: var(--coffee);
+  margin: 3px 0 8px;
+}
+
+.cart-stepper {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  border: 1px solid var(--line);
+  border-radius: 99px;
+  padding: 2px;
+  background: var(--warm-white);
+}
+
+.cart-stepper button {
+  width: 24px;
+  height: 24px;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--green-moss);
+  font-size: 14px;
+  line-height: 1;
+  display: grid;
+  place-items: center;
+  transition: .2s;
+}
+
+.cart-stepper button:hover {
+  background: var(--sand);
+}
+
+.cart-stepper span {
+  min-width: 22px;
+  text-align: center;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--green-moss);
+}
+
+.cart-item-right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 8px;
+  flex: 0 0 auto;
+}
+
+.cart-line-total {
+  font-size: 12px;
+  font-weight: 700;
+  white-space: nowrap;
+  color: var(--green-moss);
+}
+
+.cart-remove {
+  border: 0;
+  background: transparent;
+  color: var(--green-sage);
+  font-size: 11px;
+  letter-spacing: .5px;
+  text-decoration: underline;
+  transition: .2s;
+}
+
+.cart-remove:hover {
+  color: #B66B65;
+}
+
+.cart-footer {
+  flex: 0 0 auto;
+  padding: 16px 22px calc(18px + env(safe-area-inset-bottom));
+  border-top: 1px solid var(--line);
+  background: var(--background);
+}
+
+.cart-total-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 14px;
+}
+
+.cart-total-row span {
+  font-size: 11px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--green-olive);
+  font-weight: 700;
+}
+
+.cart-total-row strong {
+  font-family: 'Playfair Display', serif;
+  font-size: 24px;
+  font-weight: 600;
+  color: var(--green-moss);
+}
+
+.cart-checkout {
+  width: 100%;
+  padding: 16px;
+  border-radius: 99px;
+  border: 1px solid var(--green-moss);
+  background: var(--green-moss);
+  color: var(--cream);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.4px;
+  text-transform: uppercase;
+  transition: .3s;
+}
+
+.cart-checkout:hover {
+  background: var(--green-olive);
+  border-color: var(--green-olive);
+}
+
+.cart-checkout:disabled {
+  opacity: .4;
+  cursor: not-allowed;
+}
+
+/* ==========================================================
+   9. TOAST
+   ========================================================== */
+.toast {
+  position: fixed;
+  left: 50%;
+  bottom: calc(96px + env(safe-area-inset-bottom));
+  transform: translate(-50%, 12px);
+  z-index: 130;
+  background: var(--green-moss);
+  color: var(--cream);
+  font-size: 12px;
+  padding: 12px 22px;
+  border-radius: 99px;
+  opacity: 0;
+  visibility: hidden;
+  transition: .3s;
+  pointer-events: none;
+  max-width: 86vw;
+  text-align: center;
+  box-shadow: 0 12px 30px rgba(53, 70, 56, .2);
+}
+
+.toast.show {
+  opacity: 1;
+  visibility: visible;
+  transform: translate(-50%, 0);
+}
+
+/* ==========================================================
+   10. RESPONSIVIDADE
+   ========================================================== */
+@media (max-width: 900px) {
+  .header-info {
+    display: none;
+  }
+}
+
+@media (max-width: 760px) {
+
+  .header-content {
+    padding: 12px 18px;
+  }
+
+  .logo-name {
+    font-size: 22px;
+  }
+
+  .logo-subtitle {
+    font-size: 8px;
+    letter-spacing: 1.6px;
+  }
+
+  .category-wrapper {
+    padding: 0 18px 10px;
+  }
+
+  .categories {
+    gap: 22px;
+  }
+
+  .category {
+    font-size: 11.5px;
+  }
+
+  /* Feed ocupa toda a área */
+  .feed-view {
+    align-items: stretch;
+  }
+
+  .product {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    padding: 0;
+    overflow: hidden;
+  }
+
+  .media-container {
+    position: absolute;
+    inset: 0;
+    height: 100%;
+    border-radius: 0;
+  }
+
+  .media-container::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, .12),
+      transparent 35%,
+      rgba(0, 0, 0, .85)
+    );
+    pointer-events: none;
+  }
+
+  .media-indicators {
+    top: 16px;
+    left: 18px;
+    right: 18px;
+  }
+
+  .media-label {
+    display: none;
+  }
+
+  .product-information {
+    position: absolute;
+    z-index: 5;
+    bottom: 24px;
+    left: 20px;
+    right: 78px;
+    padding: 0;
+    justify-content: flex-end;
+    color: white;
+  }
+
+  .eyebrow {
+    color: var(--sand);
+    font-size: 9px;
+    margin-bottom: 10px;
+  }
+
+  .product-title {
+    font-size: 32px;
+    margin-bottom: 8px;
+    text-shadow: 0 2px 15px #0005;
+    color: white;
+  }
+
+  .product-description {
+    color: rgba(255, 255, 255, .82);
+    font-size: 11.5px;
+    line-height: 1.55;
+    margin-bottom: 14px;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .product-price {
+    font-size: 22px;
+    margin-bottom: 15px;
+    color: white;
+  }
+
+  .product-actions {
+    gap: 10px;
+  }
+
+  .order-button {
+    background: var(--cream);
+    color: var(--green-moss);
+    border-color: var(--cream);
+    padding: 13px 18px;
+    font-size: 10px;
+  }
+
+  .order-button.in-cart {
+    background: var(--sand);
+    color: var(--green-moss);
+    border-color: var(--sand);
+  }
+
+  .favorite-button {
+    width: 44px;
+    height: 44px;
+    color: white;
+    border-color: #ffffff70;
+  }
+
+  .product-number {
+    display: none;
+  }
+
+  .navigation {
+    right: 16px;
+    bottom: 24px;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .nav-button {
+    width: 40px;
+    height: 40px;
+    color: white;
+    border-color: #ffffff70;
+    background: rgba(0, 0, 0, .2);
+    backdrop-filter: blur(8px);
+    border-radius: 50%;
+  }
+
+  .navigation-label {
+    display: none;
+  }
+
+  /* Lista */
+  .list-view {
+    padding: 18px 18px 26px;
+  }
+
+  .list-grid {
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 14px;
+  }
+
+  .card-body {
+    padding: 12px 13px 14px;
+  }
+
+  .card-name {
+    font-size: 16px;
+  }
+
+  .card-desc {
+    font-size: 11px;
+  }
+
+  .card-price {
+    font-size: 15px;
+  }
+
+  .card-add {
+    padding: 9px 13px;
+    font-size: 9px;
+  }
+
+  .card-footer {
+    gap: 6px;
+  }
+
+  /* Barra inferior */
+  .bottom-bar {
+    padding: 8px 16px calc(8px + env(safe-area-inset-bottom));
+  }
+
+  .mode-button {
+    font-size: 10px;
+    letter-spacing: 1px;
+    padding: 10px 6px;
+  }
+
+  /* Tutorial */
+  .tutorial-card {
+    padding: 28px 20px 24px;
+    border-radius: 16px;
+  }
+
+  .tutorial-title {
+    font-size: 22px;
+  }
+
+  .tutorial-text {
+    font-size: 13px;
+  }
+
+  .toast {
+    bottom: calc(90px + env(safe-area-inset-bottom));
+  }
+}
+
+@media (max-width: 380px) {
+  .list-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+
+  .card-name {
+    font-size: 15px;
+  }
+
+  .mode-button {
+    font-size: 9px;
+  }
+}
+
+@media (min-width: 761px) and (max-height: 650px) {
+  .product {
+    padding-top: 14px;
+    padding-bottom: 14px;
+  }
+
+  .product-title {
+    font-size: 38px;
+  }
+
+  .product-description {
+    margin-bottom: 20px;
+  }
+
+  .product-number {
+    margin-top: 20px;
+  }
+}
+
+/* ==========================================================
+   11. ACESSIBILIDADE (PREFERS-REDUCED-MOTION)
+   ========================================================== */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .splash-logo, .splash-subtitle {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<!-- ==========================================================
+     ETAPA 1 — SPLASH SCREEN
+     ========================================================== -->
+<div id="splashScreen" class="splash-screen">
+  <div class="splash-logo">meetcoffe</div>
+  <div class="splash-subtitle">Um encontro de sabores.</div>
+</div>
+
+<!-- ==========================================================
+     ETAPA 2 — TUTORIAL OVERLAY
+     ========================================================== -->
+<div id="introOverlay" class="intro-overlay" role="dialog" aria-modal="true">
+
+  <div class="tutorial-card">
+    
+    <!-- Slide 1 -->
+    <div class="tutorial-slide active" data-slide="0">
+      <div class="tutorial-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 19V5M5 12l7-7 7 7"/>
+        </svg>
+      </div>
+      <h2 class="tutorial-title">Explore o Cardápio</h2>
+      <p class="tutorial-text">Deslize para cima e para baixo para navegar entre os pratos. Deslize para os lados para ver mais fotos e vídeos.</p>
+    </div>
+
+    <!-- Slide 2 -->
+    <div class="tutorial-slide" data-slide="1">
+      <div class="tutorial-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="10"/>
+          <path d="M12 6v6l4 2"/>
+        </svg>
+      </div>
+      <h2 class="tutorial-title">Encontre e Adicione</h2>
+      <p class="tutorial-text">Utilize as categorias no topo para filtrar suas escolhas. Adicione seus favoritos à sacola de forma simples.</p>
+    </div>
+
+    <!-- Slide 3 -->
+    <div class="tutorial-slide" data-slide="2">
+      <div class="tutorial-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="3" y="3" width="18" height="18" rx="2"/>
+          <path d="M3 12h18"/>
+        </svg>
+      </div>
+      <h2 class="tutorial-title">Do Seu Jeito</h2>
+      <p class="tutorial-text">Alterne entre a experiência visual imersiva e o formato de lista convencional na barra inferior.</p>
+    </div>
+
+    <!-- Progresso -->
+    <div class="tutorial-progress">
+      <div class="progress-dot active"></div>
+      <div class="progress-dot"></div>
+      <div class="progress-dot"></div>
+    </div>
+
+    <button id="tutorialNext" class="tutorial-btn">Próximo</button>
+    <button id="tutorialSkip" class="tutorial-skip">Não mostrar novamente</button>
+
+  </div>
+
+</div>
+
+<!-- ==========================================================
+     HEADER
+     ========================================================== -->
+<header class="header">
+
+  <div class="header-content">
+
+    <div class="logo">
+      <div class="logo-name">meetcoffe</div>
+      <div class="logo-subtitle">Café &amp; Gastronomia</div>
+    </div>
+
+    <div class="header-actions">
+
+      <div class="header-info">
+        <span>●</span> Aberto hoje · 08h às 22h
+      </div>
+
+      <button class="bag-button" id="bagButton" aria-label="Abrir sacola">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
+             stroke="currentColor" stroke-width="1.6"
+             stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+          <line x1="3" y1="6" x2="21" y2="6"></line>
+          <path d="M16 10a4 4 0 0 1-8 0"></path>
+        </svg>
+        <span class="bag-count" id="bagCount">0</span>
+      </button>
+
+    </div>
+
+  </div>
+
+  <div class="category-wrapper">
+    <nav class="categories" id="categories" aria-label="Categorias do cardápio"></nav>
+  </div>
+
+</header>
+
+
+<!-- ==========================================================
+     CONTEÚDO PRINCIPAL
+     ========================================================== -->
+<main class="main">
+
+  <!-- MODO 1 — EXPERIÊNCIA -->
+  <section class="feed-view" id="feedView">
+    <div class="feed" id="feed"></div>
+    <div class="empty-state" id="emptyState">
+      Nenhum produto nesta categoria.
+    </div>
+    <div class="navigation">
+      <span class="navigation-label">NAVEGAR</span>
+      <button class="nav-button" id="previous" aria-label="Produto anterior">↑</button>
+      <button class="nav-button" id="next" aria-label="Próximo produto">↓</button>
+    </div>
+  </section>
+
+  <!-- MODO 2 — LISTA -->
+  <section class="list-view" id="listView" aria-label="Cardápio em lista"></section>
+
+</main>
+
+
+<!-- ==========================================================
+     BARRA INFERIOR FIXA — ALTERNADOR DE MODOS
+     ========================================================== -->
+<footer class="bottom-bar">
+  <div class="mode-switch">
+
+    <button class="mode-button active" id="experienceBtn" aria-pressed="true">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
+           stroke="currentColor" stroke-width="1.8"
+           stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <rect x="3" y="3" width="18" height="18" rx="2"></rect>
+        <path d="M3 12h18"></path>
+      </svg>
+      Experiência
+    </button>
+
+    <button class="mode-button" id="listBtn" aria-pressed="false">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
+           stroke="currentColor" stroke-width="1.8"
+           stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <line x1="8" y1="6" x2="21" y2="6"></line>
+        <line x1="8" y1="12" x2="21" y2="12"></line>
+        <line x1="8" y1="18" x2="21" y2="18"></line>
+        <line x1="3" y1="6" x2="3.01" y2="6"></line>
+        <line x1="3" y1="12" x2="3.01" y2="12"></line>
+        <line x1="3" y1="18" x2="3.01" y2="18"></line>
+      </svg>
+      Ver em lista
+    </button>
+
+  </div>
+</footer>
+
+
+<!-- ==========================================================
+     SACOLA (DRAWER)
+     ========================================================== -->
+<div class="drawer-overlay" id="cartOverlay"></div>
+
+<aside class="cart-drawer" id="cartDrawer" aria-label="Sacola de pedidos">
+
+  <div class="cart-header">
+    <div>
+      <div class="cart-title">Sua sacola</div>
+      <div class="cart-subtitle" id="cartSubtitle">0 itens</div>
+    </div>
+    <button class="cart-close" id="cartClose" aria-label="Fechar sacola">✕</button>
+  </div>
+
+  <div class="cart-body" id="cartBody"></div>
+
+  <div class="cart-footer">
+    <div class="cart-total-row">
+      <span>Total</span>
+      <strong id="cartTotal">R$ 0,00</strong>
+    </div>
+    <button class="cart-checkout" id="cartCheckout" disabled>
+      Finalizar pedido no WhatsApp
+    </button>
+  </div>
+
+</aside>
+
+
+<!-- Toast de feedback -->
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+
+<script>
+/* ==========================================================
+   CONFIGURAÇÃO
+   ========================================================== */
+
+const WHATSAPP_NUMBER = ""; // Insira DDI + DDD + número (ex: "5511999999999")
+
+const STORAGE_INTRO = "meetcoffe_intro_seen_v1";
+const STORAGE_CART  = "meetcoffe_cart_v1";
+
+
+/* ==========================================================
+   PRODUTOS DO CARDÁPIO
+   ========================================================== */
+const products = [
+  {
+    id: 1,
+    category: "Café da manhã",
+    name: "Morning Ritual",
+    description: "Panquecas artesanais, frutas frescas da estação e mel natural. Uma experiência delicada para começar o dia.",
+    price: "R$ 32,90",
+    media: [
+      { type: "image", src: "https://images.unsplash.com/photo-1528207776546-365bb710ee93?auto=format&fit=crop&w=1400&q=90" },
+      { type: "image", src: "https://images.unsplash.com/photo-1525351484163-7529414344d8?auto=format&fit=crop&w=1400&q=90" },
+      { type: "video", src: "https://www.w3schools.com/html/mov_bbb.mp4", poster: "https://images.unsplash.com/photo-1528207776546-365bb710ee93?auto=format&fit=crop&w=1400&q=90" }
+    ]
+  },
+  {
+    id: 2,
+    category: "Café da manhã",
+    name: "Avocado Toast",
+    description: "Pão de fermentação natural, avocado cremoso, ovos e finalização com azeite extravirgem.",
+    price: "R$ 28,90",
+    media: [
+      { type: "image", src: "https://images.unsplash.com/photo-1525351484163-7529414344d8?auto=format&fit=crop&w=1400&q=90" },
+      { type: "image", src: "https://images.unsplash.com/photo-1547592180-85f173990554?auto=format&fit=crop&w=1400&q=90" }
+    ]
+  },
+  {
+    id: 3,
+    category: "Almoço",
+    name: "Garden Bowl",
+    description: "Uma composição equilibrada de folhas frescas, vegetais selecionados e ingredientes preparados diariamente.",
+    price: "R$ 39,90",
+    media: [
+      { type: "image", src: "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=1400&q=90" },
+      { type: "image", src: "https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=1400&q=90" }
+    ]
+  },
+  {
+    id: 4,
+    category: "Almoço",
+    name: "Pasta della Casa",
+    description: "Massa preparada com molho cremoso, ervas frescas e ingredientes selecionados.",
+    price: "R$ 46,90",
+    media: [
+      { type: "image", src: "https://images.unsplash.com/photo-1473093295043-cdd812d0e601?auto=format&fit=crop&w=1400&q=90" },
+      { type: "image", src: "https://images.unsplash.com/photo-1551183053-bf91a1d81141?auto=format&fit=crop&w=1400&q=90" },
+      { type: "video", src: "https://www.w3schools.com/html/movie.mp4", poster: "https://images.unsplash.com/photo-1473093295043-cdd812d0e601?auto=format&fit=crop&w=1400&q=90" }
+    ]
+  },
+  {
+    id: 5,
+    category: "Lanches",
+    name: "Maison Burger",
+    description: "Blend artesanal, queijo especial, pão brioche tostado e molho exclusivo da casa.",
+    price: "R$ 42,90",
+    media: [
+      { type: "image", src: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=1400&q=90" },
+      { type: "image", src: "https://images.unsplash.com/photo-1553979459-d2229ba7433a?auto=format&fit=crop&w=1400&q=90" }
+    ]
+  },
+  {
+    id: 6,
+    category: "Bebidas",
+    name: "Iced Coffee",
+    description: "Espresso especial, leite cremoso e gelo. Uma combinação refrescante e equilibrada.",
+    price: "R$ 18,90",
+    media: [
+      { type: "image", src: "https://images.unsplash.com/photo-1461023058943-07fcbe16d735?auto=format&fit=crop&w=1400&q=90" },
+      { type: "image", src: "https://images.unsplash.com/photo-1517701604599-bb29b565090c?auto=format&fit=crop&w=1400&q=90" }
+    ]
+  },
+  {
+    id: 7,
+    category: "Sobremesas",
+    name: "Berry Cheesecake",
+    description: "Cheesecake artesanal com textura delicada, base crocante e calda de frutas vermelhas.",
+    price: "R$ 22,90",
+    media: [
+      { type: "image", src: "https://images.unsplash.com/photo-1533134242443-d4fd215305ad?auto=format&fit=crop&w=1400&q=90" },
+      { type: "image", src: "https://images.unsplash.com/photo-1565958011703-44f9829ba187?auto=format&fit=crop&w=1400&q=90" }
+    ]
+  }
+];
+
+
+/* ==========================================================
+   ESTADO DA APLICAÇÃO
+   ========================================================== */
+const categories = ["Todos", ...new Set(products.map(product => product.category))];
+
+let selectedCategory = "Todos";
+let filteredProducts = [...products];
+
+let currentProduct = 0;
+let currentMedia   = 0;
+
+let viewMode = "experience";
+const favorites = new Set();
+let cart = {};
+
+/* ---------- Referências do DOM ---------- */
+const feed             = document.getElementById("feed");
+const feedView         = document.getElementById("feedView");
+const listView         = document.getElementById("listView");
+const categoriesElement= document.getElementById("categories");
+const emptyState       = document.getElementById("emptyState");
+
+const bagButton        = document.getElementById("bagButton");
+const bagCount         = document.getElementById("bagCount");
+
+const cartDrawer       = document.getElementById("cartDrawer");
+const cartOverlay      = document.getElementById("cartOverlay");
+const cartClose        = document.getElementById("cartClose");
+const cartBody         = document.getElementById("cartBody");
+const cartSubtitle     = document.getElementById("cartSubtitle");
+const cartTotalEl      = document.getElementById("cartTotal");
+const cartCheckout     = document.getElementById("cartCheckout");
+
+const experienceBtn    = document.getElementById("experienceBtn");
+const listBtn          = document.getElementById("listBtn");
+
+const toastEl          = document.getElementById("toast");
+
+/* ==========================================================
+   LÓGICA DA EXPERIÊNCIA DE ENTRADA (SPLASH -> TUTORIAL)
+   ========================================================== */
+let currentTutorialSlide = 0;
+const tutorialSlides = document.querySelectorAll(".tutorial-slide");
+const tutorialDots = document.querySelectorAll(".progress-dot");
+const tutorialNextBtn = document.getElementById("tutorialNext");
+const tutorialSkipBtn = document.getElementById("tutorialSkip");
+const splashScreen = document.getElementById("splashScreen");
+const introOverlay = document.getElementById("introOverlay");
+
+function initIntro() {
+  const hasSeen = localStorage.getItem(STORAGE_INTRO) === "true";
+  
+  if (hasSeen) {
+    splashScreen.style.display = "none";
+    introOverlay.style.display = "none";
+    return;
+  }
+
+  // Splash -> Tutorial
+  setTimeout(() => {
+    splashScreen.classList.add("hidden");
+    setTimeout(() => {
+      introOverlay.classList.add("open");
+    }, 800);
+  }, 2800); // Tempo da Splash Screen
+}
+
+function showTutorialSlide(index) {
+  tutorialSlides.forEach((s, i) => s.classList.toggle("active", i === index));
+  tutorialDots.forEach((d, i) => d.classList.toggle("active", i === index));
+  
+  if (index === tutorialSlides.length - 1) {
+    tutorialNextBtn.textContent = "Vamos começar";
+  } else {
+    tutorialNextBtn.textContent = "Próximo";
+  }
+}
+
+tutorialNextBtn.addEventListener("click", () => {
+  if (currentTutorialSlide < tutorialSlides.length - 1) {
+    currentTutorialSlide++;
+    showTutorialSlide(currentTutorialSlide);
+  } else {
+    localStorage.setItem(STORAGE_INTRO, "true");
+    introOverlay.classList.remove("open");
+  }
+});
+
+tutorialSkipBtn.addEventListener("click", () => {
+  localStorage.setItem(STORAGE_INTRO, "true");
+  introOverlay.classList.remove("open");
+});
+
+
+/* ==========================================================
+   HELPERS DE PREÇO
+   ========================================================== */
+function priceToNumber(priceString) {
+  const cleaned = String(priceString).replace(/[^\d,.-]/g, "").replace(/\./g, "").replace(",", ".");
+  const value = parseFloat(cleaned);
+  return isNaN(value) ? 0 : value;
+}
+
+function formatPrice(value) {
+  return "R$ " + value.toFixed(2).replace(".", ",");
+}
+
+function findProduct(id) {
+  return products.find(product => String(product.id) === String(id));
+}
+
+
+/* ==========================================================
+   CARRINHO
+   ========================================================== */
+function loadCart() {
+  try {
+    const raw = localStorage.getItem(STORAGE_CART);
+    const parsed = raw ? JSON.parse(raw) : {};
+    cart = (parsed && typeof parsed === "object") ? parsed : {};
+  } catch (error) {
+    cart = {};
+  }
+}
+
+function saveCart() {
+  try {
+    localStorage.setItem(STORAGE_CART, JSON.stringify(cart));
+  } catch (error) {}
+}
+
+function getQty(id) {
+  return cart[String(id)] || 0;
+}
+
+function setQty(id, qty) {
+  const key = String(id);
+  if (qty <= 0) delete cart[key];
+  else cart[key] = qty;
+  saveCart();
+  updateCartUI();
+}
+
+function addToCart(id, amount = 1) {
+  setQty(id, getQty(id) + amount);
+}
+
+function cartItemCount() {
+  return Object.values(cart).reduce((total, qty) => total + qty, 0);
+}
+
+function cartTotalValue() {
+  return Object.keys(cart).reduce((total, id) => {
+    const product = findProduct(id);
+    if (!product) return total;
+    return total + priceToNumber(product.price) * cart[id];
+  }, 0);
+}
+
+
+/* ==========================================================
+   TOAST
+   ========================================================== */
+let toastTimer = null;
+
+function showToast(message) {
+  toastEl.textContent = message;
+  toastEl.classList.add("show");
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => {
+    toastEl.classList.remove("show");
+  }, 1900);
+}
+
+
+/* ==========================================================
+   CATEGORIAS
+   ========================================================== */
+function renderCategories() {
+  categoriesElement.innerHTML = "";
+
+  categories.forEach(category => {
+    const button = document.createElement("button");
+    button.className = "category " + (selectedCategory === category ? "active" : "");
+    button.textContent = category;
+    button.type = "button";
+
+    button.onclick = () => {
+      selectedCategory = category;
+      filteredProducts = category === "Todos"
+        ? [...products]
+        : products.filter(product => product.category === category);
+
+      currentProduct = 0;
+      currentMedia = 0;
+
+      renderCategories();
+      renderProducts();
+
+      if (viewMode === "list") renderList();
+    };
+
+    categoriesElement.appendChild(button);
+  });
+}
+
+
+/* ==========================================================
+   MODO EXPERIÊNCIA (FEED)
+   ========================================================== */
+function renderProducts() {
+  feed.innerHTML = "";
+  emptyState.style.display = filteredProducts.length ? "none" : "flex";
+
+  filteredProducts.forEach((product, index) => {
+    const article = document.createElement("article");
+    article.className = "product";
+
+    // Mídias
+    const mediaContainer = document.createElement("div");
+    mediaContainer.className = "media-container";
+
+    const track = document.createElement("div");
+    track.className = "media-track";
+
+    product.media.forEach(media => {
+      const item = document.createElement("div");
+      item.className = "media-item";
+
+      if (media.type === "video") {
+        const video = document.createElement("video");
+        video.src = media.src;
+        video.poster = media.poster || "";
+        video.muted = true;
+        video.loop = true;
+        video.playsInline = true;
+        video.preload = "metadata";
+        item.appendChild(video);
+      } else {
+        const image = document.createElement("img");
+        image.src = media.src;
+        image.alt = product.name;
+        image.loading = index === 0 ? "eager" : "lazy";
+        item.appendChild(image);
+      }
+      track.appendChild(item);
+    });
+
+    const indicators = document.createElement("div");
+    indicators.className = "media-indicators";
+    product.media.forEach((_, mediaIndex) => {
+      const indicator = document.createElement("div");
+      indicator.className = "indicator" + (mediaIndex === 0 ? " active" : "");
+      indicators.appendChild(indicator);
+    });
+
+    const mediaLabel = document.createElement("div");
+    mediaLabel.className = "media-label";
+    mediaLabel.textContent = "meetcoffe experience";
+
+    mediaContainer.appendChild(track);
+    mediaContainer.appendChild(indicators);
+    mediaContainer.appendChild(mediaLabel);
+
+    // Informações
+    const information = document.createElement("div");
+    information.className = "product-information";
+
+    const isFavorite = favorites.has(product.id);
+
+    information.innerHTML = `
+      <div class="eyebrow">${product.category}</div>
+      <h1 class="product-title">${product.name}</h1>
+      <p class="product-description">${product.description}</p>
+      <div class="product-price">${product.price}</div>
+      <div class="product-actions">
+        <button class="order-button" type="button" data-product-id="${product.id}">
+          Adicionar à sacola
+        </button>
+        <button class="favorite-button ${isFavorite ? "liked" : ""}" type="button" data-favorite-id="${product.id}" aria-label="Favoritar ${product.name}">
+          ${isFavorite ? "♥" : "♡"}
+        </button>
+      </div>
+      <div class="product-number">
+        ${String(index + 1).padStart(2, "0")} / ${String(filteredProducts.length).padStart(2, "0")}
+      </div>
+    `;
+
+    const favoriteButton = information.querySelector(".favorite-button");
+    favoriteButton.onclick = () => {
+      if (favorites.has(product.id)) favorites.delete(product.id);
+      else favorites.add(product.id);
+      const liked = favorites.has(product.id);
+      favoriteButton.classList.toggle("liked", liked);
+      favoriteButton.textContent = liked ? "♥" : "♡";
+    };
+
+    const orderButton = information.querySelector(".order-button");
+    orderButton.onclick = () => {
+      addToCart(product.id);
+      showToast(`${product.name} adicionado à sacola`);
+    };
+
+    article.appendChild(mediaContainer);
+    article.appendChild(information);
+    feed.appendChild(article);
+  });
+
+  updateView();
+  updateCartUI();
+}
+
+function updateView() {
+  const slides = document.querySelectorAll(".product");
+  slides.forEach((slide, index) => {
+    const active = index === currentProduct;
+    slide.classList.toggle("active", active);
+
+    const product = filteredProducts[index];
+    if (!product) return;
+
+    const track = slide.querySelector(".media-track");
+    const mediaIndex = active ? currentMedia : 0;
+
+    track.style.transform = `translateX(-${mediaIndex * 100}%)`;
+
+    slide.querySelectorAll(".indicator").forEach((indicator, indicatorIndex) => {
+      indicator.classList.toggle("active", active && indicatorIndex === currentMedia);
+    });
+
+    slide.querySelectorAll("video").forEach(video => {
+      const selectedMedia = product.media[mediaIndex];
+      if (active && viewMode === "experience" && selectedMedia && selectedMedia.type === "video" && selectedMedia.src === video.getAttribute("src")) {
+        video.play().catch(() => {});
+      } else {
+        video.pause();
+        try { video.currentTime = 0; } catch (error) {}
+      }
+    });
+  });
+}
+
+function pauseAllVideos() {
+  document.querySelectorAll("video").forEach(video => video.pause());
+}
+
+/* Navegação */
+function nextProduct() {
+  if (currentProduct < filteredProducts.length - 1) {
+    currentProduct++;
+    currentMedia = 0;
+    updateView();
+  }
+}
+
+function previousProduct() {
+  if (currentProduct > 0) {
+    currentProduct--;
+    currentMedia = 0;
+    updateView();
+  }
+}
+
+function nextMedia() {
+  const product = filteredProducts[currentProduct];
+  if (!product) return;
+  if (currentMedia < product.media.length - 1) {
+    currentMedia++;
+    updateView();
+  }
+}
+
+function previousMedia() {
+  if (currentMedia > 0) {
+    currentMedia--;
+    updateView();
+  }
+}
+
+
+/* ==========================================================
+   MODO LISTA
+   ========================================================== */
+function buildCard(product) {
+  const card = document.createElement("article");
+  card.className = "list-card";
+
+  const imageMedia = product.media.find(media => media.type === "image") || product.media[0];
+  const imageSrc = imageMedia.type === "image" ? imageMedia.src : (imageMedia.poster || "");
+  const isFavorite = favorites.has(product.id);
+
+  card.innerHTML = `
+    <div class="card-media">
+      <img src="${imageSrc}" alt="${product.name}" loading="lazy">
+      <button class="card-fav ${isFavorite ? "liked" : ""}" type="button" data-fav="${product.id}" aria-label="Favoritar ${product.name}">
+        ${isFavorite ? "♥" : "♡"}
+      </button>
+    </div>
+    <div class="card-body">
+      <div class="card-category">${product.category}</div>
+      <h3 class="card-name">${product.name}</h3>
+      <p class="card-desc">${product.description}</p>
+      <div class="card-footer">
+        <div class="card-price">${product.price}</div>
+        <div class="card-action" data-product-id="${product.id}"></div>
+      </div>
+    </div>
+  `;
+
+  const favButton = card.querySelector(".card-fav");
+  favButton.onclick = () => {
+    if (favorites.has(product.id)) favorites.delete(product.id);
+    else favorites.add(product.id);
+    const liked = favorites.has(product.id);
+    favButton.classList.toggle("liked", liked);
+    favButton.textContent = liked ? "♥" : "♡";
+  };
+
+  renderCardAction(card.querySelector(".card-action"), product.id);
+  return card;
+}
+
+function renderCardAction(container, productId) {
+  const qty = getQty(productId);
+  if (qty === 0) {
+    container.innerHTML = `<button class="card-add" type="button" data-add="${productId}">Adicionar</button>`;
+  } else {
+    container.innerHTML = `
+      <div class="stepper">
+        <button type="button" data-dec="${productId}" aria-label="Remover um item">−</button>
+        <span>${qty}</span>
+        <button type="button" data-inc="${productId}" aria-label="Adicionar um item">+</button>
+      </div>
+    `;
+  }
+}
+
+function renderList() {
+  listView.innerHTML = "";
+  if (!filteredProducts.length) {
+    const empty = document.createElement("p");
+    empty.className = "list-empty";
+    empty.textContent = "Nenhum produto nesta categoria.";
+    listView.appendChild(empty);
+    return;
+  }
+
+  const grid = document.createElement("div");
+  grid.className = "list-grid";
+  filteredProducts.forEach(product => {
+    grid.appendChild(buildCard(product));
+  });
+  listView.appendChild(grid);
+}
+
+listView.addEventListener("click", event => {
+  const addBtn = event.target.closest("[data-add]");
+  const incBtn = event.target.closest("[data-inc]");
+  const decBtn = event.target.closest("[data-dec]");
+
+  if (addBtn) {
+    addToCart(addBtn.dataset.add);
+    const product = findProduct(addBtn.dataset.add);
+    if (product) showToast(`${product.name} adicionado à sacola`);
+    return;
+  }
+  if (incBtn) return addToCart(incBtn.dataset.inc, 1);
+  if (decBtn) setQty(decBtn.dataset.dec, getQty(decBtn.dataset.dec) - 1);
+});
+
+
+/* ==========================================================
+   ALTERNÂNCIA DE MODOS
+   ========================================================== */
+function setViewMode(mode) {
+  viewMode = mode;
+  if (mode === "list") {
+    pauseAllVideos();
+    feedView.classList.add("hidden");
+    listView.classList.add("active");
+    renderList();
+    listView.scrollTop = 0;
+  } else {
+    listView.classList.remove("active");
+    feedView.classList.remove("hidden");
+    updateView();
+  }
+
+  experienceBtn.classList.toggle("active", mode === "experience");
+  listBtn.classList.toggle("active", mode === "list");
+  experienceBtn.setAttribute("aria-pressed", String(mode === "experience"));
+  listBtn.setAttribute("aria-pressed", String(mode === "list"));
+}
+
+experienceBtn.addEventListener("click", () => { if (viewMode !== "experience") setViewMode("experience"); });
+listBtn.addEventListener("click", () => { if (viewMode !== "list") setViewMode("list"); });
+
+
+/* ==========================================================
+   SACOLA UI
+   ========================================================== */
+function updateCartUI() {
+  const count = cartItemCount();
+  bagCount.textContent = count;
+  bagCount.classList.toggle("visible", count > 0);
+
+  document.querySelectorAll(".order-button[data-product-id]").forEach(button => {
+    const qty = getQty(button.dataset.productId);
+    button.textContent = qty > 0 ? `Na sacola · ${qty}` : "Adicionar à sacola";
+    button.classList.toggle("in-cart", qty > 0);
+  });
+
+  document.querySelectorAll(".card-action").forEach(container => {
+    renderCardAction(container, container.dataset.productId);
+  });
+
+  renderCartDrawer();
+}
+
+function renderCartDrawer() {
+  const ids = Object.keys(cart).filter(id => findProduct(id));
+  const count = cartItemCount();
+  
+  cartSubtitle.textContent = count === 0 ? "Nenhum item" : (count === 1 ? "1 item" : `${count} itens`);
+  cartTotalEl.textContent = formatPrice(cartTotalValue());
+  cartCheckout.disabled = count === 0;
+
+  if (!ids.length) {
+    cartBody.innerHTML = `
+      <div class="cart-empty">
+        <strong>Sua sacola está vazia</strong>
+        Explore o cardápio e adicione seus produtos favoritos.
+      </div>
+    `;
+    return;
+  }
+
+  cartBody.innerHTML = ids.map(id => {
+    const product = findProduct(id);
+    const qty = cart[id];
+    const lineTotal = priceToNumber(product.price) * qty;
+    const imageMedia = product.media.find(media => media.type === "image") || product.media[0];
+    const imageSrc = imageMedia.type === "image" ? imageMedia.src : (imageMedia.poster || "");
+
+    return `
+      <div class="cart-item">
+        <img class="cart-thumb" src="${imageSrc}" alt="${product.name}" loading="lazy">
+        <div class="cart-item-info">
+          <div class="cart-item-name">${product.name}</div>
+          <div class="cart-item-price">${product.price} cada</div>
+          <div class="cart-stepper">
+            <button type="button" data-cart-dec="${id}" aria-label="Remover um item">−</button>
+            <span>${qty}</span>
+            <button type="button" data-cart-inc="${id}" aria-label="Adicionar um item">+</button>
+          </div>
+        </div>
+        <div class="cart-item-right">
+          <div class="cart-line-total">${formatPrice(lineTotal)}</div>
+          <button class="cart-remove" type="button" data-cart-remove="${id}">remover</button>
+        </div>
+      </div>
+    `;
+  }).join("");
+}
+
+cartBody.addEventListener("click", event => {
+  const incBtn = event.target.closest("[data-cart-inc]");
+  const decBtn = event.target.closest("[data-cart-dec]");
+  const removeBtn = event.target.closest("[data-cart-remove]");
+
+  if (incBtn) return addToCart(incBtn.dataset.cartInc, 1);
+  if (decBtn) return setQty(decBtn.dataset.cartDec, getQty(decBtn.dataset.cartDec) - 1);
+  if (removeBtn) setQty(removeBtn.dataset.cartRemove, 0);
+});
+
+function openCart() {
+  cartDrawer.classList.add("open");
+  cartOverlay.classList.add("open");
+}
+
+function closeCart() {
+  cartDrawer.classList.remove("open");
+  cartOverlay.classList.remove("open");
+}
+
+bagButton.addEventListener("click", openCart);
+cartClose.addEventListener("click", closeCart);
+cartOverlay.addEventListener("click", closeCart);
+
+document.addEventListener("keydown", event => {
+  if (event.key === "Escape" && cartDrawer.classList.contains("open")) closeCart();
+});
+
+cartCheckout.addEventListener("click", () => {
+  const ids = Object.keys(cart).filter(id => findProduct(id));
+  if (!ids.length) return showToast("Sua sacola está vazia");
+  if (!WHATSAPP_NUMBER) return alert("Configure o número de WhatsApp no código.");
+
+  const lines = ids.map(id => {
+    const product = findProduct(id);
+    const lineTotal = priceToNumber(product.price) * cart[id];
+    return `• ${cart[id]}x ${product.name} — ${formatPrice(lineTotal)}`;
+  });
+
+  const message = `Olá, meetcoffe! Gostaria de fazer o seguinte pedido:\n\n${lines.join("\n")}\n\nTotal: ${formatPrice(cartTotalValue())}`;
+  window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`, "_blank");
+});
+
+
+/* ==========================================================
+   NAVEGAÇÃO DESKTOP / TOUCH / TECLADO
+   ========================================================== */
+document.getElementById("next").onclick = nextProduct;
+document.getElementById("previous").onclick = previousProduct;
+
+let startX = 0, startY = 0;
+
+feed.addEventListener("touchstart", event => {
+  if (viewMode !== "experience") return;
+  startX = event.changedTouches[0].clientX;
+  startY = event.changedTouches[0].clientY;
+}, { passive: true });
+
+feed.addEventListener("touchend", event => {
+  if (viewMode !== "experience") return;
+  const endX = event.changedTouches[0].clientX;
+  const endY = event.changedTouches[0].clientY;
+  const diffX = endX - startX;
+  const diffY = endY - startY;
+
+  if (Math.max(Math.abs(diffX), Math.abs(diffY)) < 40) return;
+
+  if (Math.abs(diffX) > Math.abs(diffY)) {
+    diffX < 0 ? nextMedia() : previousMedia();
+  } else {
+    diffY < 0 ? nextProduct() : previousProduct();
+  }
+}, { passive: true });
+
+document.addEventListener("keydown", event => {
+  if (viewMode !== "experience" || cartDrawer.classList.contains("open") || introOverlay.classList.contains("open")) return;
+  if (event.key === "ArrowDown") nextProduct();
+  if (event.key === "ArrowUp") previousProduct();
+  if (event.key === "ArrowRight") nextMedia();
+  if (event.key === "ArrowLeft") previousMedia();
+});
+
+let wheelLocked = false;
+feed.addEventListener("wheel", event => {
+  if (viewMode !== "experience" || wheelLocked || Math.abs(event.deltaY) < 15) return;
+  wheelLocked = true;
+  event.deltaY > 0 ? nextProduct() : previousProduct();
+  setTimeout(() => { wheelLocked = false; }, 450);
+}, { passive: true });
+
+
+/* ==========================================================
+   INICIALIZAÇÃO
+   ========================================================== */
+loadCart();
+renderCategories();
+renderProducts();
+setViewMode("experience");
+updateCartUI();
+initIntro();
+
+window.addEventListener("resize", () => {
+  if (viewMode === "experience") updateView();
+});
+</script>
+
+</body>
+</html>
