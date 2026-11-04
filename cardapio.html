@@ -15,7 +15,6 @@
    1. VARIÁVEIS E RESET — IDENTIDADE MEETCOFFE
    ========================================================== */
 :root {
-  /* Paleta Principal */
   --green-moss: #354638;
   --green-olive: #66745A;
   --green-sage: #A5AD98;
@@ -24,7 +23,6 @@
   --coffee: #574538;
   --warm-white: #FCFAF5;
 
-  /* Variáveis de Sistema */
   --background: var(--cream);
   --surface: var(--warm-white);
   --text: var(--green-moss);
@@ -44,8 +42,7 @@
   box-sizing: border-box;
 }
 
-html,
-body {
+html, body {
   height: 100%;
 }
 
@@ -60,14 +57,8 @@ body {
   flex-direction: column;
 }
 
-button {
-  font: inherit;
-  cursor: pointer;
-}
-
-img {
-  display: block;
-}
+button { font: inherit; cursor: pointer; }
+img { display: block; }
 
 /* ==========================================================
    2. SPLASH SCREEN (ETAPA 1)
@@ -110,12 +101,8 @@ img {
   animation: splashSubIn 1.2s ease 0.8s forwards;
 }
 
-@keyframes splashLogoIn {
-  to { opacity: 1; transform: translateY(0); }
-}
-@keyframes splashSubIn {
-  to { opacity: 1; }
-}
+@keyframes splashLogoIn { to { opacity: 1; transform: translateY(0); } }
+@keyframes splashSubIn { to { opacity: 1; } }
 
 /* ==========================================================
    3. TUTORIAL OVERLAY (ETAPA 2)
@@ -153,9 +140,7 @@ img {
   transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
-.intro-overlay.open .tutorial-card {
-  transform: translateY(0);
-}
+.intro-overlay.open .tutorial-card { transform: translateY(0); }
 
 .tutorial-slide {
   display: none;
@@ -163,9 +148,7 @@ img {
   animation: fadeInSlide 0.4s ease forwards;
 }
 
-.tutorial-slide.active {
-  display: block;
-}
+.tutorial-slide.active { display: block; }
 
 @keyframes fadeInSlide {
   from { opacity: 0; transform: translateY(10px); }
@@ -183,10 +166,7 @@ img {
   place-items: center;
 }
 
-.tutorial-icon svg {
-  width: 28px;
-  height: 28px;
-}
+.tutorial-icon svg { width: 28px; height: 28px; }
 
 .tutorial-title {
   font-family: 'Playfair Display', serif;
@@ -241,13 +221,8 @@ img {
   transition: background 0.3s ease, transform 0.2s ease;
 }
 
-.tutorial-btn:hover {
-  background: var(--green-olive);
-}
-
-.tutorial-btn:active {
-  transform: scale(0.98);
-}
+.tutorial-btn:hover { background: var(--green-olive); }
+.tutorial-btn:active { transform: scale(0.98); }
 
 .tutorial-skip {
   display: block;
@@ -264,12 +239,10 @@ img {
   transition: color 0.2s ease;
 }
 
-.tutorial-skip:hover {
-  color: var(--green-olive);
-}
+.tutorial-skip:hover { color: var(--green-olive); }
 
 /* ==========================================================
-   4. HEADER
+   4. HEADER (ATUALIZADO: MAIS LIMPO)
    ========================================================== */
 .header {
   flex: 0 0 auto;
@@ -283,11 +256,12 @@ img {
 .header-content {
   max-width: 1440px;
   margin: auto;
-  padding: 15px 5%;
+  padding: 16px 5%;
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 16px;
+  transition: padding 0.3s ease;
 }
 
 .logo {
@@ -296,16 +270,13 @@ img {
   gap: 12px;
 }
 
-.logo-icon {
-  display: none; /* Removido para dar lugar ao logotipo tipográfico */
-}
-
 .logo-name {
   font-family: 'Playfair Display', serif;
   font-size: 26px;
   letter-spacing: 1px;
   color: var(--green-moss);
   line-height: 1.1;
+  transition: font-size 0.3s ease;
 }
 
 .logo-subtitle {
@@ -329,12 +300,8 @@ img {
   white-space: nowrap;
 }
 
-.header-info span {
-  color: var(--green-moss);
-  margin-right: 6px;
-}
+.header-info span { color: var(--green-moss); margin-right: 6px; }
 
-/* Botão da sacola */
 .bag-button {
   position: relative;
   width: 44px;
@@ -354,9 +321,7 @@ img {
   border-color: var(--green-moss);
 }
 
-.bag-button:active {
-  transform: scale(.94);
-}
+.bag-button:active { transform: scale(.94); }
 
 .bag-count {
   position: absolute;
@@ -376,9 +341,7 @@ img {
   border: 2px solid var(--warm-white);
 }
 
-.bag-count.visible {
-  display: grid;
-}
+.bag-count.visible { display: grid; }
 
 /* ==========================================================
    5. CATEGORIAS
@@ -396,9 +359,7 @@ img {
   scrollbar-width: none;
 }
 
-.categories::-webkit-scrollbar {
-  display: none;
-}
+.categories::-webkit-scrollbar { display: none; }
 
 .category {
   background: transparent;
@@ -412,9 +373,7 @@ img {
   transition: .25s;
 }
 
-.category.active {
-  color: var(--green-moss);
-}
+.category.active { color: var(--green-moss); }
 
 .category.active::after {
   content: "";
@@ -437,7 +396,6 @@ img {
   flex-direction: column;
 }
 
-/* ---------- 6.1 MODO EXPERIÊNCIA (FEED) ---------- */
 .feed-view {
   flex: 1 1 auto;
   min-height: 0;
@@ -447,9 +405,7 @@ img {
   overflow: hidden;
 }
 
-.feed-view.hidden {
-  display: none;
-}
+.feed-view.hidden { display: none; }
 
 .feed {
   position: relative;
@@ -488,6 +444,20 @@ img {
   background: var(--sand);
 }
 
+/* Zonas de Toque (Stories) */
+.media-tap-left,
+.media-tap-right {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 40%;
+  z-index: 4;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+.media-tap-left { left: 0; }
+.media-tap-right { right: 0; }
+
 .media-track {
   display: flex;
   height: 100%;
@@ -517,6 +487,7 @@ img {
   display: flex;
   gap: 5px;
   z-index: 5;
+  pointer-events: none;
 }
 
 .indicator {
@@ -526,9 +497,7 @@ img {
   border-radius: 2px;
 }
 
-.indicator.active {
-  background: white;
-}
+.indicator.active { background: white; }
 
 .media-label {
   position: absolute;
@@ -540,6 +509,7 @@ img {
   letter-spacing: 2px;
   z-index: 5;
   text-shadow: 0 1px 8px #0008;
+  pointer-events: none;
 }
 
 /* Informações do produto */
@@ -548,6 +518,8 @@ img {
   flex-direction: column;
   justify-content: center;
   padding-right: 5%;
+  position: relative;
+  z-index: 5;
 }
 
 .eyebrow {
@@ -625,14 +597,8 @@ img {
   place-items: center;
 }
 
-.favorite-button:hover {
-  border-color: var(--green-moss);
-}
-
-.favorite-button.liked {
-  color: #B66B65;
-  border-color: #B66B65;
-}
+.favorite-button:hover { border-color: var(--green-moss); }
+.favorite-button.liked { color: #B66B65; border-color: #B66B65; }
 
 .product-number {
   margin-top: 55px;
@@ -641,7 +607,7 @@ img {
   letter-spacing: 2px;
 }
 
-/* Navegação (setas) */
+/* Navegação (Setas Desktop) */
 .navigation {
   position: absolute;
   right: 5%;
@@ -669,17 +635,9 @@ img {
   border-color: var(--green-moss);
 }
 
-.nav-button:active {
-  transform: scale(.94);
-}
+.nav-button:active { transform: scale(.94); }
+.navigation-label { font-size: 10px; color: var(--green-olive); margin: 0 8px; }
 
-.navigation-label {
-  font-size: 10px;
-  color: var(--green-olive);
-  margin: 0 8px;
-}
-
-/* Estado vazio */
 .empty-state {
   display: none;
   position: absolute;
@@ -690,7 +648,7 @@ img {
   font-size: 13px;
 }
 
-/* ---------- 6.2 MODO LISTA ---------- */
+/* MODO LISTA */
 .list-view {
   flex: 1 1 auto;
   min-height: 0;
@@ -700,9 +658,7 @@ img {
   display: none;
 }
 
-.list-view.active {
-  display: block;
-}
+.list-view.active { display: block; }
 
 .list-grid {
   max-width: 1440px;
@@ -741,9 +697,7 @@ img {
   transition: transform .7s cubic-bezier(.2, .75, .25, 1);
 }
 
-.list-card:hover .card-media img {
-  transform: scale(1.05);
-}
+.list-card:hover .card-media img { transform: scale(1.05); }
 
 .card-fav {
   position: absolute;
@@ -762,13 +716,8 @@ img {
   transition: .25s;
 }
 
-.card-fav:hover {
-  transform: scale(1.08);
-}
-
-.card-fav.liked {
-  color: #B66B65;
-}
+.card-fav:hover { transform: scale(1.08); }
+.card-fav.liked { color: #B66B65; }
 
 .card-body {
   padding: 16px 18px 18px;
@@ -840,14 +789,8 @@ img {
   white-space: nowrap;
 }
 
-.card-add:hover {
-  background: var(--green-olive);
-  border-color: var(--green-olive);
-}
-
-.card-add:active {
-  transform: scale(.96);
-}
+.card-add:hover { background: var(--green-olive); border-color: var(--green-olive); }
+.card-add:active { transform: scale(.96); }
 
 .stepper {
   display: flex;
@@ -873,9 +816,7 @@ img {
   transition: .2s;
 }
 
-.stepper button:hover {
-  background: rgba(255, 255, 255, .18);
-}
+.stepper button:hover { background: rgba(255, 255, 255, .18); }
 
 .stepper span {
   min-width: 20px;
@@ -892,7 +833,7 @@ img {
 }
 
 /* ==========================================================
-   7. BARRA INFERIOR FIXA (ALTERNADOR DE MODOS)
+   7. BARRA INFERIOR FIXA
    ========================================================== */
 .bottom-bar {
   flex: 0 0 auto;
@@ -931,17 +872,9 @@ img {
   transition: background .28s, color .28s, box-shadow .28s, transform .2s;
 }
 
-.mode-button svg {
-  flex: 0 0 auto;
-}
-
-.mode-button:not(.active):hover {
-  color: var(--green-moss);
-}
-
-.mode-button:active {
-  transform: scale(.98);
-}
+.mode-button svg { flex: 0 0 auto; }
+.mode-button:not(.active):hover { color: var(--green-moss); }
+.mode-button:active { transform: scale(.98); }
 
 .mode-button.active {
   background: var(--green-moss);
@@ -963,10 +896,7 @@ img {
   transition: .3s;
 }
 
-.drawer-overlay.open {
-  opacity: 1;
-  visibility: visible;
-}
+.drawer-overlay.open { opacity: 1; visibility: visible; }
 
 .cart-drawer {
   position: fixed;
@@ -985,9 +915,7 @@ img {
   box-shadow: -20px 0 50px rgba(0, 0, 0, .12);
 }
 
-.cart-drawer.open {
-  transform: translateX(0);
-}
+.cart-drawer.open { transform: translateX(0); }
 
 .cart-header {
   flex: 0 0 auto;
@@ -1068,10 +996,7 @@ img {
   border-bottom: 1px solid var(--line);
 }
 
-.cart-item:last-child {
-  border-bottom: 0;
-  padding-bottom: 0;
-}
+.cart-item:last-child { border-bottom: 0; padding-bottom: 0; }
 
 .cart-thumb {
   width: 58px;
@@ -1082,10 +1007,7 @@ img {
   background: var(--sand);
 }
 
-.cart-item-info {
-  flex: 1 1 auto;
-  min-width: 0;
-}
+.cart-item-info { flex: 1 1 auto; min-width: 0; }
 
 .cart-item-name {
   font-size: 13px;
@@ -1094,11 +1016,7 @@ img {
   color: var(--green-moss);
 }
 
-.cart-item-price {
-  font-size: 11px;
-  color: var(--coffee);
-  margin: 3px 0 8px;
-}
+.cart-item-price { font-size: 11px; color: var(--coffee); margin: 3px 0 8px; }
 
 .cart-stepper {
   display: inline-flex;
@@ -1124,9 +1042,7 @@ img {
   transition: .2s;
 }
 
-.cart-stepper button:hover {
-  background: var(--sand);
-}
+.cart-stepper button:hover { background: var(--sand); }
 
 .cart-stepper span {
   min-width: 22px;
@@ -1161,9 +1077,7 @@ img {
   transition: .2s;
 }
 
-.cart-remove:hover {
-  color: #B66B65;
-}
+.cart-remove:hover { color: #B66B65; }
 
 .cart-footer {
   flex: 0 0 auto;
@@ -1208,15 +1122,8 @@ img {
   transition: .3s;
 }
 
-.cart-checkout:hover {
-  background: var(--green-olive);
-  border-color: var(--green-olive);
-}
-
-.cart-checkout:disabled {
-  opacity: .4;
-  cursor: not-allowed;
-}
+.cart-checkout:hover { background: var(--green-olive); border-color: var(--green-olive); }
+.cart-checkout:disabled { opacity: .4; cursor: not-allowed; }
 
 /* ==========================================================
    9. TOAST
@@ -1248,18 +1155,16 @@ img {
 }
 
 /* ==========================================================
-   10. RESPONSIVIDADE
+   10. RESPONSIVIDADE (AJUSTES DO HEADER E REMOÇÃO DAS SETAS)
    ========================================================== */
 @media (max-width: 900px) {
-  .header-info {
-    display: none;
-  }
+  .header-info { display: none; }
 }
 
 @media (max-width: 760px) {
-
+  /* HEADER MAIS LIMPO E COMPACTO */
   .header-content {
-    padding: 12px 18px;
+    padding: 10px 18px;
   }
 
   .logo-name {
@@ -1267,26 +1172,28 @@ img {
   }
 
   .logo-subtitle {
-    font-size: 8px;
-    letter-spacing: 1.6px;
+    display: none; /* Oculta subtítulo no mobile */
+  }
+
+  .bag-button {
+    width: 38px;
+    height: 38px;
   }
 
   .category-wrapper {
     padding: 0 18px 10px;
   }
 
-  .categories {
-    gap: 22px;
+  .categories { gap: 22px; }
+  .category { font-size: 11.5px; padding: 6px 0; }
+
+  /* OCULTAR SETAS DE NAVEGAÇÃO NO MOBILE */
+  .navigation {
+    display: none !important;
   }
 
-  .category {
-    font-size: 11.5px;
-  }
-
-  /* Feed ocupa toda a área */
-  .feed-view {
-    align-items: stretch;
-  }
+  /* FEED */
+  .feed-view { align-items: stretch; }
 
   .product {
     display: flex;
@@ -1322,9 +1229,7 @@ img {
     right: 18px;
   }
 
-  .media-label {
-    display: none;
-  }
+  .media-label { display: none; }
 
   .product-information {
     position: absolute;
@@ -1335,6 +1240,12 @@ img {
     padding: 0;
     justify-content: flex-end;
     color: white;
+    pointer-events: none; /* Permite que o toque passe para o fundo onde não houver botões */
+  }
+
+  /* Restaura eventos de clique nos botões dentro da informação */
+  .product-information button {
+    pointer-events: auto;
   }
 
   .eyebrow {
@@ -1367,9 +1278,7 @@ img {
     color: white;
   }
 
-  .product-actions {
-    gap: 10px;
-  }
+  .product-actions { gap: 10px; }
 
   .order-button {
     background: var(--cream);
@@ -1392,67 +1301,22 @@ img {
     border-color: #ffffff70;
   }
 
-  .product-number {
-    display: none;
-  }
+  .product-number { display: none; }
 
-  .navigation {
-    right: 16px;
-    bottom: 24px;
-    flex-direction: column;
-    gap: 10px;
-  }
-
-  .nav-button {
-    width: 40px;
-    height: 40px;
-    color: white;
-    border-color: #ffffff70;
-    background: rgba(0, 0, 0, .2);
-    backdrop-filter: blur(8px);
-    border-radius: 50%;
-  }
-
-  .navigation-label {
-    display: none;
-  }
-
-  /* Lista */
-  .list-view {
-    padding: 18px 18px 26px;
-  }
-
+  /* LISTA */
+  .list-view { padding: 18px 18px 26px; }
   .list-grid {
     grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
     gap: 14px;
   }
+  .card-body { padding: 12px 13px 14px; }
+  .card-name { font-size: 16px; }
+  .card-desc { font-size: 11px; }
+  .card-price { font-size: 15px; }
+  .card-add { padding: 9px 13px; font-size: 9px; }
+  .card-footer { gap: 6px; }
 
-  .card-body {
-    padding: 12px 13px 14px;
-  }
-
-  .card-name {
-    font-size: 16px;
-  }
-
-  .card-desc {
-    font-size: 11px;
-  }
-
-  .card-price {
-    font-size: 15px;
-  }
-
-  .card-add {
-    padding: 9px 13px;
-    font-size: 9px;
-  }
-
-  .card-footer {
-    gap: 6px;
-  }
-
-  /* Barra inferior */
+  /* BARRA INFERIOR */
   .bottom-bar {
     padding: 8px 16px calc(8px + env(safe-area-inset-bottom));
   }
@@ -1463,62 +1327,23 @@ img {
     padding: 10px 6px;
   }
 
-  /* Tutorial */
-  .tutorial-card {
-    padding: 28px 20px 24px;
-    border-radius: 16px;
-  }
-
-  .tutorial-title {
-    font-size: 22px;
-  }
-
-  .tutorial-text {
-    font-size: 13px;
-  }
-
-  .toast {
-    bottom: calc(90px + env(safe-area-inset-bottom));
-  }
+  .toast { bottom: calc(90px + env(safe-area-inset-bottom)); }
 }
 
 @media (max-width: 380px) {
-  .list-grid {
-    grid-template-columns: 1fr 1fr;
-    gap: 10px;
-  }
-
-  .card-name {
-    font-size: 15px;
-  }
-
-  .mode-button {
-    font-size: 9px;
-  }
+  .list-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
+  .card-name { font-size: 15px; }
+  .mode-button { font-size: 9px; }
 }
 
 @media (min-width: 761px) and (max-height: 650px) {
-  .product {
-    padding-top: 14px;
-    padding-bottom: 14px;
-  }
-
-  .product-title {
-    font-size: 38px;
-  }
-
-  .product-description {
-    margin-bottom: 20px;
-  }
-
-  .product-number {
-    margin-top: 20px;
-  }
+  .product { padding-top: 14px; padding-bottom: 14px; }
+  .product-title { font-size: 38px; }
+  .product-description { margin-bottom: 20px; }
+  .product-number { margin-top: 20px; }
 }
 
-/* ==========================================================
-   11. ACESSIBILIDADE (PREFERS-REDUCED-MOTION)
-   ========================================================== */
+/* ACESSIBILIDADE */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.01ms !important;
@@ -1537,22 +1362,15 @@ img {
 
 <body>
 
-<!-- ==========================================================
-     ETAPA 1 — SPLASH SCREEN
-     ========================================================== -->
+<!-- SPLASH SCREEN -->
 <div id="splashScreen" class="splash-screen">
   <div class="splash-logo">meetcoffe</div>
   <div class="splash-subtitle">Um encontro de sabores.</div>
 </div>
 
-<!-- ==========================================================
-     ETAPA 2 — TUTORIAL OVERLAY
-     ========================================================== -->
+<!-- TUTORIAL OVERLAY -->
 <div id="introOverlay" class="intro-overlay" role="dialog" aria-modal="true">
-
   <div class="tutorial-card">
-    
-    <!-- Slide 1 -->
     <div class="tutorial-slide active" data-slide="0">
       <div class="tutorial-icon">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
@@ -1560,10 +1378,9 @@ img {
         </svg>
       </div>
       <h2 class="tutorial-title">Explore o Cardápio</h2>
-      <p class="tutorial-text">Deslize para cima e para baixo para navegar entre os pratos. Deslize para os lados para ver mais fotos e vídeos.</p>
+      <p class="tutorial-text">Deslize para cima e para baixo para navegar entre os pratos. Toque nas laterais para ver mais fotos e vídeos.</p>
     </div>
 
-    <!-- Slide 2 -->
     <div class="tutorial-slide" data-slide="1">
       <div class="tutorial-icon">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
@@ -1575,7 +1392,6 @@ img {
       <p class="tutorial-text">Utilize as categorias no topo para filtrar suas escolhas. Adicione seus favoritos à sacola de forma simples.</p>
     </div>
 
-    <!-- Slide 3 -->
     <div class="tutorial-slide" data-slide="2">
       <div class="tutorial-icon">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
@@ -1587,7 +1403,6 @@ img {
       <p class="tutorial-text">Alterne entre a experiência visual imersiva e o formato de lista convencional na barra inferior.</p>
     </div>
 
-    <!-- Progresso -->
     <div class="tutorial-progress">
       <div class="progress-dot active"></div>
       <div class="progress-dot"></div>
@@ -1596,62 +1411,46 @@ img {
 
     <button id="tutorialNext" class="tutorial-btn">Próximo</button>
     <button id="tutorialSkip" class="tutorial-skip">Não mostrar novamente</button>
-
   </div>
-
 </div>
 
-<!-- ==========================================================
-     HEADER
-     ========================================================== -->
+<!-- HEADER -->
 <header class="header">
-
   <div class="header-content">
-
     <div class="logo">
       <div class="logo-name">meetcoffe</div>
       <div class="logo-subtitle">Café &amp; Gastronomia</div>
     </div>
 
     <div class="header-actions">
-
       <div class="header-info">
         <span>●</span> Aberto hoje · 08h às 22h
       </div>
-
       <button class="bag-button" id="bagButton" aria-label="Abrir sacola">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
-             stroke="currentColor" stroke-width="1.6"
-             stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
           <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
           <line x1="3" y1="6" x2="21" y2="6"></line>
           <path d="M16 10a4 4 0 0 1-8 0"></path>
         </svg>
         <span class="bag-count" id="bagCount">0</span>
       </button>
-
     </div>
-
   </div>
 
   <div class="category-wrapper">
     <nav class="categories" id="categories" aria-label="Categorias do cardápio"></nav>
   </div>
-
 </header>
 
-
-<!-- ==========================================================
-     CONTEÚDO PRINCIPAL
-     ========================================================== -->
+<!-- CONTEÚDO PRINCIPAL -->
 <main class="main">
-
-  <!-- MODO 1 — EXPERIÊNCIA -->
   <section class="feed-view" id="feedView">
     <div class="feed" id="feed"></div>
     <div class="empty-state" id="emptyState">
       Nenhum produto nesta categoria.
     </div>
+    
+    <!-- Setas - Serão ocultadas no mobile via CSS -->
     <div class="navigation">
       <span class="navigation-label">NAVEGAR</span>
       <button class="nav-button" id="previous" aria-label="Produto anterior">↑</button>
@@ -1659,32 +1458,21 @@ img {
     </div>
   </section>
 
-  <!-- MODO 2 — LISTA -->
   <section class="list-view" id="listView" aria-label="Cardápio em lista"></section>
-
 </main>
 
-
-<!-- ==========================================================
-     BARRA INFERIOR FIXA — ALTERNADOR DE MODOS
-     ========================================================== -->
+<!-- BARRA INFERIOR -->
 <footer class="bottom-bar">
   <div class="mode-switch">
-
     <button class="mode-button active" id="experienceBtn" aria-pressed="true">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
-           stroke="currentColor" stroke-width="1.8"
-           stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
         <rect x="3" y="3" width="18" height="18" rx="2"></rect>
         <path d="M3 12h18"></path>
       </svg>
       Experiência
     </button>
-
     <button class="mode-button" id="listBtn" aria-pressed="false">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
-           stroke="currentColor" stroke-width="1.8"
-           stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
         <line x1="8" y1="6" x2="21" y2="6"></line>
         <line x1="8" y1="12" x2="21" y2="12"></line>
         <line x1="8" y1="18" x2="21" y2="18"></line>
@@ -1694,18 +1482,12 @@ img {
       </svg>
       Ver em lista
     </button>
-
   </div>
 </footer>
 
-
-<!-- ==========================================================
-     SACOLA (DRAWER)
-     ========================================================== -->
+<!-- SACOLA (DRAWER) -->
 <div class="drawer-overlay" id="cartOverlay"></div>
-
 <aside class="cart-drawer" id="cartDrawer" aria-label="Sacola de pedidos">
-
   <div class="cart-header">
     <div>
       <div class="cart-title">Sua sacola</div>
@@ -1713,9 +1495,7 @@ img {
     </div>
     <button class="cart-close" id="cartClose" aria-label="Fechar sacola">✕</button>
   </div>
-
   <div class="cart-body" id="cartBody"></div>
-
   <div class="cart-footer">
     <div class="cart-total-row">
       <span>Total</span>
@@ -1725,28 +1505,18 @@ img {
       Finalizar pedido no WhatsApp
     </button>
   </div>
-
 </aside>
 
-
-<!-- Toast de feedback -->
+<!-- TOAST -->
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
-
 <script>
-/* ==========================================================
-   CONFIGURAÇÃO
-   ========================================================== */
-
-const WHATSAPP_NUMBER = ""; // Insira DDI + DDD + número (ex: "5511999999999")
-
+/* CONFIGURAÇÃO */
+const WHATSAPP_NUMBER = ""; 
 const STORAGE_INTRO = "meetcoffe_intro_seen_v1";
 const STORAGE_CART  = "meetcoffe_cart_v1";
 
-
-/* ==========================================================
-   PRODUTOS DO CARDÁPIO
-   ========================================================== */
+/* PRODUTOS */
 const products = [
   {
     id: 1,
@@ -1829,48 +1599,36 @@ const products = [
   }
 ];
 
-
-/* ==========================================================
-   ESTADO DA APLICAÇÃO
-   ========================================================== */
-const categories = ["Todos", ...new Set(products.map(product => product.category))];
-
+/* ESTADO */
+const categories = ["Todos", ...new Set(products.map(p => p.category))];
 let selectedCategory = "Todos";
 let filteredProducts = [...products];
-
 let currentProduct = 0;
-let currentMedia   = 0;
-
+let currentMedia = 0;
 let viewMode = "experience";
 const favorites = new Set();
 let cart = {};
 
-/* ---------- Referências do DOM ---------- */
-const feed             = document.getElementById("feed");
-const feedView         = document.getElementById("feedView");
-const listView         = document.getElementById("listView");
-const categoriesElement= document.getElementById("categories");
-const emptyState       = document.getElementById("emptyState");
+/* DOM ELEMENTS */
+const feed = document.getElementById("feed");
+const feedView = document.getElementById("feedView");
+const listView = document.getElementById("listView");
+const categoriesElement = document.getElementById("categories");
+const emptyState = document.getElementById("emptyState");
+const bagButton = document.getElementById("bagButton");
+const bagCount = document.getElementById("bagCount");
+const cartDrawer = document.getElementById("cartDrawer");
+const cartOverlay = document.getElementById("cartOverlay");
+const cartClose = document.getElementById("cartClose");
+const cartBody = document.getElementById("cartBody");
+const cartSubtitle = document.getElementById("cartSubtitle");
+const cartTotalEl = document.getElementById("cartTotal");
+const cartCheckout = document.getElementById("cartCheckout");
+const experienceBtn = document.getElementById("experienceBtn");
+const listBtn = document.getElementById("listBtn");
+const toastEl = document.getElementById("toast");
 
-const bagButton        = document.getElementById("bagButton");
-const bagCount         = document.getElementById("bagCount");
-
-const cartDrawer       = document.getElementById("cartDrawer");
-const cartOverlay      = document.getElementById("cartOverlay");
-const cartClose        = document.getElementById("cartClose");
-const cartBody         = document.getElementById("cartBody");
-const cartSubtitle     = document.getElementById("cartSubtitle");
-const cartTotalEl      = document.getElementById("cartTotal");
-const cartCheckout     = document.getElementById("cartCheckout");
-
-const experienceBtn    = document.getElementById("experienceBtn");
-const listBtn          = document.getElementById("listBtn");
-
-const toastEl          = document.getElementById("toast");
-
-/* ==========================================================
-   LÓGICA DA EXPERIÊNCIA DE ENTRADA (SPLASH -> TUTORIAL)
-   ========================================================== */
+/* SPLASH E TUTORIAL */
 let currentTutorialSlide = 0;
 const tutorialSlides = document.querySelectorAll(".tutorial-slide");
 const tutorialDots = document.querySelectorAll(".progress-dot");
@@ -1880,32 +1638,21 @@ const splashScreen = document.getElementById("splashScreen");
 const introOverlay = document.getElementById("introOverlay");
 
 function initIntro() {
-  const hasSeen = localStorage.getItem(STORAGE_INTRO) === "true";
-  
-  if (hasSeen) {
+  if (localStorage.getItem(STORAGE_INTRO) === "true") {
     splashScreen.style.display = "none";
     introOverlay.style.display = "none";
     return;
   }
-
-  // Splash -> Tutorial
   setTimeout(() => {
     splashScreen.classList.add("hidden");
-    setTimeout(() => {
-      introOverlay.classList.add("open");
-    }, 800);
-  }, 2800); // Tempo da Splash Screen
+    setTimeout(() => { introOverlay.classList.add("open"); }, 800);
+  }, 2800);
 }
 
 function showTutorialSlide(index) {
   tutorialSlides.forEach((s, i) => s.classList.toggle("active", i === index));
   tutorialDots.forEach((d, i) => d.classList.toggle("active", i === index));
-  
-  if (index === tutorialSlides.length - 1) {
-    tutorialNextBtn.textContent = "Vamos começar";
-  } else {
-    tutorialNextBtn.textContent = "Próximo";
-  }
+  tutorialNextBtn.textContent = index === tutorialSlides.length - 1 ? "Vamos começar" : "Próximo";
 }
 
 tutorialNextBtn.addEventListener("click", () => {
@@ -1923,48 +1670,28 @@ tutorialSkipBtn.addEventListener("click", () => {
   introOverlay.classList.remove("open");
 });
 
-
-/* ==========================================================
-   HELPERS DE PREÇO
-   ========================================================== */
+/* HELPERS */
 function priceToNumber(priceString) {
   const cleaned = String(priceString).replace(/[^\d,.-]/g, "").replace(/\./g, "").replace(",", ".");
-  const value = parseFloat(cleaned);
-  return isNaN(value) ? 0 : value;
+  return parseFloat(cleaned) || 0;
 }
 
-function formatPrice(value) {
-  return "R$ " + value.toFixed(2).replace(".", ",");
-}
+function formatPrice(value) { return "R$ " + value.toFixed(2).replace(".", ","); }
+function findProduct(id) { return products.find(p => String(p.id) === String(id)); }
 
-function findProduct(id) {
-  return products.find(product => String(product.id) === String(id));
-}
-
-
-/* ==========================================================
-   CARRINHO
-   ========================================================== */
+/* CARRINHO */
 function loadCart() {
   try {
     const raw = localStorage.getItem(STORAGE_CART);
-    const parsed = raw ? JSON.parse(raw) : {};
-    cart = (parsed && typeof parsed === "object") ? parsed : {};
-  } catch (error) {
-    cart = {};
-  }
+    cart = raw ? JSON.parse(raw) : {};
+  } catch (e) { cart = {}; }
 }
 
 function saveCart() {
-  try {
-    localStorage.setItem(STORAGE_CART, JSON.stringify(cart));
-  } catch (error) {}
+  try { localStorage.setItem(STORAGE_CART, JSON.stringify(cart)); } catch (e) {}
 }
 
-function getQty(id) {
-  return cart[String(id)] || 0;
-}
-
+function getQty(id) { return cart[String(id)] || 0; }
 function setQty(id, qty) {
   const key = String(id);
   if (qty <= 0) delete cart[key];
@@ -1973,73 +1700,46 @@ function setQty(id, qty) {
   updateCartUI();
 }
 
-function addToCart(id, amount = 1) {
-  setQty(id, getQty(id) + amount);
-}
-
-function cartItemCount() {
-  return Object.values(cart).reduce((total, qty) => total + qty, 0);
-}
-
+function addToCart(id, amount = 1) { setQty(id, getQty(id) + amount); }
+function cartItemCount() { return Object.values(cart).reduce((t, q) => t + q, 0); }
 function cartTotalValue() {
-  return Object.keys(cart).reduce((total, id) => {
-    const product = findProduct(id);
-    if (!product) return total;
-    return total + priceToNumber(product.price) * cart[id];
+  return Object.keys(cart).reduce((t, id) => {
+    const p = findProduct(id);
+    return p ? t + priceToNumber(p.price) * cart[id] : t;
   }, 0);
 }
 
-
-/* ==========================================================
-   TOAST
-   ========================================================== */
+/* TOAST */
 let toastTimer = null;
-
 function showToast(message) {
   toastEl.textContent = message;
   toastEl.classList.add("show");
   clearTimeout(toastTimer);
-  toastTimer = setTimeout(() => {
-    toastEl.classList.remove("show");
-  }, 1900);
+  toastTimer = setTimeout(() => toastEl.classList.remove("show"), 1900);
 }
 
-
-/* ==========================================================
-   CATEGORIAS
-   ========================================================== */
+/* CATEGORIAS */
 function renderCategories() {
   categoriesElement.innerHTML = "";
-
-  categories.forEach(category => {
-    const button = document.createElement("button");
-    button.className = "category " + (selectedCategory === category ? "active" : "");
-    button.textContent = category;
-    button.type = "button";
-
-    button.onclick = () => {
-      selectedCategory = category;
-      filteredProducts = category === "Todos"
-        ? [...products]
-        : products.filter(product => product.category === category);
-
+  categories.forEach(cat => {
+    const btn = document.createElement("button");
+    btn.className = "category " + (selectedCategory === cat ? "active" : "");
+    btn.textContent = cat;
+    btn.type = "button";
+    btn.onclick = () => {
+      selectedCategory = cat;
+      filteredProducts = cat === "Todos" ? [...products] : products.filter(p => p.category === cat);
       currentProduct = 0;
       currentMedia = 0;
-
       renderCategories();
       renderProducts();
-
       if (viewMode === "list") renderList();
     };
-
-    categoriesElement.appendChild(button);
+    categoriesElement.appendChild(btn);
   });
 }
 
-
-/* ==========================================================
-   MODO EXPERIÊNCIA (FEED)
-   ========================================================== */
+/* MODO EXPERIÊNCIA */
 function renderProducts() {
   feed.innerHTML = "";
   emptyState.style.display = filteredProducts.length ? "none" : "flex";
@@ -2048,9 +1748,23 @@ function renderProducts() {
     const article = document.createElement("article");
     article.className = "product";
 
-    // Mídias
     const mediaContainer = document.createElement("div");
     mediaContainer.className = "media-container";
+
+    /* ADIÇÃO: Zonas de Toque (Stories) */
+    const tapLeft = document.createElement("div");
+    tapLeft.className = "media-tap-left";
+    tapLeft.addEventListener("click", (e) => {
+      e.stopPropagation();
+      previousMedia();
+    });
+
+    const tapRight = document.createElement("div");
+    tapRight.className = "media-tap-right";
+    tapRight.addEventListener("click", (e) => {
+      e.stopPropagation();
+      nextMedia();
+    });
 
     const track = document.createElement("div");
     track.className = "media-track";
@@ -2058,7 +1772,6 @@ function renderProducts() {
     product.media.forEach(media => {
       const item = document.createElement("div");
       item.className = "media-item";
-
       if (media.type === "video") {
         const video = document.createElement("video");
         video.src = media.src;
@@ -2069,21 +1782,21 @@ function renderProducts() {
         video.preload = "metadata";
         item.appendChild(video);
       } else {
-        const image = document.createElement("img");
-        image.src = media.src;
-        image.alt = product.name;
-        image.loading = index === 0 ? "eager" : "lazy";
-        item.appendChild(image);
+        const img = document.createElement("img");
+        img.src = media.src;
+        img.alt = product.name;
+        img.loading = index === 0 ? "eager" : "lazy";
+        item.appendChild(img);
       }
       track.appendChild(item);
     });
 
     const indicators = document.createElement("div");
     indicators.className = "media-indicators";
-    product.media.forEach((_, mediaIndex) => {
-      const indicator = document.createElement("div");
-      indicator.className = "indicator" + (mediaIndex === 0 ? " active" : "");
-      indicators.appendChild(indicator);
+    product.media.forEach((_, i) => {
+      const ind = document.createElement("div");
+      ind.className = "indicator" + (i === 0 ? " active" : "");
+      indicators.appendChild(ind);
     });
 
     const mediaLabel = document.createElement("div");
@@ -2093,12 +1806,12 @@ function renderProducts() {
     mediaContainer.appendChild(track);
     mediaContainer.appendChild(indicators);
     mediaContainer.appendChild(mediaLabel);
+    mediaContainer.appendChild(tapLeft);   // Adiciona zona esquerda
+    mediaContainer.appendChild(tapRight);  // Adiciona zona direita
 
-    // Informações
     const information = document.createElement("div");
     information.className = "product-information";
-
-    const isFavorite = favorites.has(product.id);
+    const isFav = favorites.has(product.id);
 
     information.innerHTML = `
       <div class="eyebrow">${product.category}</div>
@@ -2109,8 +1822,8 @@ function renderProducts() {
         <button class="order-button" type="button" data-product-id="${product.id}">
           Adicionar à sacola
         </button>
-        <button class="favorite-button ${isFavorite ? "liked" : ""}" type="button" data-favorite-id="${product.id}" aria-label="Favoritar ${product.name}">
-          ${isFavorite ? "♥" : "♡"}
+        <button class="favorite-button ${isFav ? "liked" : ""}" type="button" data-favorite-id="${product.id}">
+          ${isFav ? "♥" : "♡"}
         </button>
       </div>
       <div class="product-number">
@@ -2118,17 +1831,16 @@ function renderProducts() {
       </div>
     `;
 
-    const favoriteButton = information.querySelector(".favorite-button");
-    favoriteButton.onclick = () => {
-      if (favorites.has(product.id)) favorites.delete(product.id);
-      else favorites.add(product.id);
+    const favBtn = information.querySelector(".favorite-button");
+    favBtn.onclick = () => {
+      favorites.has(product.id) ? favorites.delete(product.id) : favorites.add(product.id);
       const liked = favorites.has(product.id);
-      favoriteButton.classList.toggle("liked", liked);
-      favoriteButton.textContent = liked ? "♥" : "♡";
+      favBtn.classList.toggle("liked", liked);
+      favBtn.textContent = liked ? "♥" : "♡";
     };
 
-    const orderButton = information.querySelector(".order-button");
-    orderButton.onclick = () => {
+    const orderBtn = information.querySelector(".order-button");
+    orderBtn.onclick = () => {
       addToCart(product.id);
       showToast(`${product.name} adicionado à sacola`);
     };
@@ -2153,30 +1865,29 @@ function updateView() {
 
     const track = slide.querySelector(".media-track");
     const mediaIndex = active ? currentMedia : 0;
-
     track.style.transform = `translateX(-${mediaIndex * 100}%)`;
 
-    slide.querySelectorAll(".indicator").forEach((indicator, indicatorIndex) => {
-      indicator.classList.toggle("active", active && indicatorIndex === currentMedia);
+    slide.querySelectorAll(".indicator").forEach((ind, i) => {
+      ind.classList.toggle("active", active && i === currentMedia);
     });
 
     slide.querySelectorAll("video").forEach(video => {
-      const selectedMedia = product.media[mediaIndex];
-      if (active && viewMode === "experience" && selectedMedia && selectedMedia.type === "video" && selectedMedia.src === video.getAttribute("src")) {
+      const selMedia = product.media[mediaIndex];
+      if (active && viewMode === "experience" && selMedia && selMedia.type === "video" && selMedia.src === video.getAttribute("src")) {
         video.play().catch(() => {});
       } else {
         video.pause();
-        try { video.currentTime = 0; } catch (error) {}
+        try { video.currentTime = 0; } catch (e) {}
       }
     });
   });
 }
 
 function pauseAllVideos() {
-  document.querySelectorAll("video").forEach(video => video.pause());
+  document.querySelectorAll("video").forEach(v => v.pause());
 }
 
-/* Navegação */
+/* NAVEGAÇÃO */
 function nextProduct() {
   if (currentProduct < filteredProducts.length - 1) {
     currentProduct++;
@@ -2195,8 +1906,7 @@ function previousProduct() {
 
 function nextMedia() {
   const product = filteredProducts[currentProduct];
-  if (!product) return;
-  if (currentMedia < product.media.length - 1) {
+  if (product && currentMedia < product.media.length - 1) {
     currentMedia++;
     updateView();
   }
@@ -2209,23 +1919,20 @@ function previousMedia() {
   }
 }
 
-
-/* ==========================================================
-   MODO LISTA
-   ========================================================== */
+/* MODO LISTA */
 function buildCard(product) {
   const card = document.createElement("article");
   card.className = "list-card";
 
-  const imageMedia = product.media.find(media => media.type === "image") || product.media[0];
-  const imageSrc = imageMedia.type === "image" ? imageMedia.src : (imageMedia.poster || "");
-  const isFavorite = favorites.has(product.id);
+  const imgMedia = product.media.find(m => m.type === "image") || product.media[0];
+  const imgSrc = imgMedia.type === "image" ? imgMedia.src : (imgMedia.poster || "");
+  const isFav = favorites.has(product.id);
 
   card.innerHTML = `
     <div class="card-media">
-      <img src="${imageSrc}" alt="${product.name}" loading="lazy">
-      <button class="card-fav ${isFavorite ? "liked" : ""}" type="button" data-fav="${product.id}" aria-label="Favoritar ${product.name}">
-        ${isFavorite ? "♥" : "♡"}
+      <img src="${imgSrc}" alt="${product.name}" loading="lazy">
+      <button class="card-fav ${isFav ? "liked" : ""}" type="button" data-fav="${product.id}">
+        ${isFav ? "♥" : "♡"}
       </button>
     </div>
     <div class="card-body">
@@ -2239,13 +1946,12 @@ function buildCard(product) {
     </div>
   `;
 
-  const favButton = card.querySelector(".card-fav");
-  favButton.onclick = () => {
-    if (favorites.has(product.id)) favorites.delete(product.id);
-    else favorites.add(product.id);
+  const favBtn = card.querySelector(".card-fav");
+  favBtn.onclick = () => {
+    favorites.has(product.id) ? favorites.delete(product.id) : favorites.add(product.id);
     const liked = favorites.has(product.id);
-    favButton.classList.toggle("liked", liked);
-    favButton.textContent = liked ? "♥" : "♡";
+    favBtn.classList.toggle("liked", liked);
+    favBtn.textContent = liked ? "♥" : "♡";
   };
 
   renderCardAction(card.querySelector(".card-action"), product.id);
@@ -2259,9 +1965,9 @@ function renderCardAction(container, productId) {
   } else {
     container.innerHTML = `
       <div class="stepper">
-        <button type="button" data-dec="${productId}" aria-label="Remover um item">−</button>
+        <button type="button" data-dec="${productId}">−</button>
         <span>${qty}</span>
-        <button type="button" data-inc="${productId}" aria-label="Adicionar um item">+</button>
+        <button type="button" data-inc="${productId}">+</button>
       </div>
     `;
   }
@@ -2276,34 +1982,28 @@ function renderList() {
     listView.appendChild(empty);
     return;
   }
-
   const grid = document.createElement("div");
   grid.className = "list-grid";
-  filteredProducts.forEach(product => {
-    grid.appendChild(buildCard(product));
-  });
+  filteredProducts.forEach(p => grid.appendChild(buildCard(p)));
   listView.appendChild(grid);
 }
 
-listView.addEventListener("click", event => {
-  const addBtn = event.target.closest("[data-add]");
-  const incBtn = event.target.closest("[data-inc]");
-  const decBtn = event.target.closest("[data-dec]");
+listView.addEventListener("click", e => {
+  const addBtn = e.target.closest("[data-add]");
+  const incBtn = e.target.closest("[data-inc]");
+  const decBtn = e.target.closest("[data-dec]");
 
   if (addBtn) {
     addToCart(addBtn.dataset.add);
-    const product = findProduct(addBtn.dataset.add);
-    if (product) showToast(`${product.name} adicionado à sacola`);
+    const p = findProduct(addBtn.dataset.add);
+    if (p) showToast(`${p.name} adicionado à sacola`);
     return;
   }
   if (incBtn) return addToCart(incBtn.dataset.inc, 1);
   if (decBtn) setQty(decBtn.dataset.dec, getQty(decBtn.dataset.dec) - 1);
 });
 
-
-/* ==========================================================
-   ALTERNÂNCIA DE MODOS
-   ========================================================== */
+/* ALTERNÂNCIA DE MODOS */
 function setViewMode(mode) {
   viewMode = mode;
   if (mode === "list") {
@@ -2317,7 +2017,6 @@ function setViewMode(mode) {
     feedView.classList.remove("hidden");
     updateView();
   }
-
   experienceBtn.classList.toggle("active", mode === "experience");
   listBtn.classList.toggle("active", mode === "list");
   experienceBtn.setAttribute("aria-pressed", String(mode === "experience"));
@@ -2327,19 +2026,16 @@ function setViewMode(mode) {
 experienceBtn.addEventListener("click", () => { if (viewMode !== "experience") setViewMode("experience"); });
 listBtn.addEventListener("click", () => { if (viewMode !== "list") setViewMode("list"); });
 
-
-/* ==========================================================
-   SACOLA UI
-   ========================================================== */
+/* SACOLA UI */
 function updateCartUI() {
   const count = cartItemCount();
   bagCount.textContent = count;
   bagCount.classList.toggle("visible", count > 0);
 
-  document.querySelectorAll(".order-button[data-product-id]").forEach(button => {
-    const qty = getQty(button.dataset.productId);
-    button.textContent = qty > 0 ? `Na sacola · ${qty}` : "Adicionar à sacola";
-    button.classList.toggle("in-cart", qty > 0);
+  document.querySelectorAll(".order-button[data-product-id]").forEach(btn => {
+    const qty = getQty(btn.dataset.productId);
+    btn.textContent = qty > 0 ? `Na sacola · ${qty}` : "Adicionar à sacola";
+    btn.classList.toggle("in-cart", qty > 0);
   });
 
   document.querySelectorAll(".card-action").forEach(container => {
@@ -2352,7 +2048,6 @@ function updateCartUI() {
 function renderCartDrawer() {
   const ids = Object.keys(cart).filter(id => findProduct(id));
   const count = cartItemCount();
-  
   cartSubtitle.textContent = count === 0 ? "Nenhum item" : (count === 1 ? "1 item" : `${count} itens`);
   cartTotalEl.textContent = formatPrice(cartTotalValue());
   cartCheckout.disabled = count === 0;
@@ -2368,22 +2063,22 @@ function renderCartDrawer() {
   }
 
   cartBody.innerHTML = ids.map(id => {
-    const product = findProduct(id);
+    const p = findProduct(id);
     const qty = cart[id];
-    const lineTotal = priceToNumber(product.price) * qty;
-    const imageMedia = product.media.find(media => media.type === "image") || product.media[0];
-    const imageSrc = imageMedia.type === "image" ? imageMedia.src : (imageMedia.poster || "");
+    const lineTotal = priceToNumber(p.price) * qty;
+    const imgMedia = p.media.find(m => m.type === "image") || p.media[0];
+    const imgSrc = imgMedia.type === "image" ? imgMedia.src : (imgMedia.poster || "");
 
     return `
       <div class="cart-item">
-        <img class="cart-thumb" src="${imageSrc}" alt="${product.name}" loading="lazy">
+        <img class="cart-thumb" src="${imgSrc}" alt="${p.name}" loading="lazy">
         <div class="cart-item-info">
-          <div class="cart-item-name">${product.name}</div>
-          <div class="cart-item-price">${product.price} cada</div>
+          <div class="cart-item-name">${p.name}</div>
+          <div class="cart-item-price">${p.price} cada</div>
           <div class="cart-stepper">
-            <button type="button" data-cart-dec="${id}" aria-label="Remover um item">−</button>
+            <button type="button" data-cart-dec="${id}">−</button>
             <span>${qty}</span>
-            <button type="button" data-cart-inc="${id}" aria-label="Adicionar um item">+</button>
+            <button type="button" data-cart-inc="${id}">+</button>
           </div>
         </div>
         <div class="cart-item-right">
@@ -2395,68 +2090,53 @@ function renderCartDrawer() {
   }).join("");
 }
 
-cartBody.addEventListener("click", event => {
-  const incBtn = event.target.closest("[data-cart-inc]");
-  const decBtn = event.target.closest("[data-cart-dec]");
-  const removeBtn = event.target.closest("[data-cart-remove]");
-
+cartBody.addEventListener("click", e => {
+  const incBtn = e.target.closest("[data-cart-inc]");
+  const decBtn = e.target.closest("[data-cart-dec]");
+  const remBtn = e.target.closest("[data-cart-remove]");
   if (incBtn) return addToCart(incBtn.dataset.cartInc, 1);
   if (decBtn) return setQty(decBtn.dataset.cartDec, getQty(decBtn.dataset.cartDec) - 1);
-  if (removeBtn) setQty(removeBtn.dataset.cartRemove, 0);
+  if (remBtn) setQty(remBtn.dataset.cartRemove, 0);
 });
 
-function openCart() {
-  cartDrawer.classList.add("open");
-  cartOverlay.classList.add("open");
-}
-
-function closeCart() {
-  cartDrawer.classList.remove("open");
-  cartOverlay.classList.remove("open");
-}
+function openCart() { cartDrawer.classList.add("open"); cartOverlay.classList.add("open"); }
+function closeCart() { cartDrawer.classList.remove("open"); cartOverlay.classList.remove("open"); }
 
 bagButton.addEventListener("click", openCart);
 cartClose.addEventListener("click", closeCart);
 cartOverlay.addEventListener("click", closeCart);
 
-document.addEventListener("keydown", event => {
-  if (event.key === "Escape" && cartDrawer.classList.contains("open")) closeCart();
+document.addEventListener("keydown", e => {
+  if (e.key === "Escape" && cartDrawer.classList.contains("open")) closeCart();
 });
 
 cartCheckout.addEventListener("click", () => {
   const ids = Object.keys(cart).filter(id => findProduct(id));
   if (!ids.length) return showToast("Sua sacola está vazia");
   if (!WHATSAPP_NUMBER) return alert("Configure o número de WhatsApp no código.");
-
   const lines = ids.map(id => {
-    const product = findProduct(id);
-    const lineTotal = priceToNumber(product.price) * cart[id];
-    return `• ${cart[id]}x ${product.name} — ${formatPrice(lineTotal)}`;
+    const p = findProduct(id);
+    return `• ${cart[id]}x ${p.name} — ${formatPrice(priceToNumber(p.price) * cart[id])}`;
   });
-
-  const message = `Olá, meetcoffe! Gostaria de fazer o seguinte pedido:\n\n${lines.join("\n")}\n\nTotal: ${formatPrice(cartTotalValue())}`;
-  window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`, "_blank");
+  const msg = `Olá, meetcoffe! Gostaria de fazer o seguinte pedido:\n\n${lines.join("\n")}\n\nTotal: ${formatPrice(cartTotalValue())}`;
+  window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`, "_blank");
 });
 
-
-/* ==========================================================
-   NAVEGAÇÃO DESKTOP / TOUCH / TECLADO
-   ========================================================== */
+/* NAVEGAÇÃO DESKTOP / TOUCH / TECLADO */
 document.getElementById("next").onclick = nextProduct;
 document.getElementById("previous").onclick = previousProduct;
 
 let startX = 0, startY = 0;
-
-feed.addEventListener("touchstart", event => {
+feed.addEventListener("touchstart", e => {
   if (viewMode !== "experience") return;
-  startX = event.changedTouches[0].clientX;
-  startY = event.changedTouches[0].clientY;
+  startX = e.changedTouches[0].clientX;
+  startY = e.changedTouches[0].clientY;
 }, { passive: true });
 
-feed.addEventListener("touchend", event => {
+feed.addEventListener("touchend", e => {
   if (viewMode !== "experience") return;
-  const endX = event.changedTouches[0].clientX;
-  const endY = event.changedTouches[0].clientY;
+  const endX = e.changedTouches[0].clientX;
+  const endY = e.changedTouches[0].clientY;
   const diffX = endX - startX;
   const diffY = endY - startY;
 
@@ -2469,26 +2149,23 @@ feed.addEventListener("touchend", event => {
   }
 }, { passive: true });
 
-document.addEventListener("keydown", event => {
+document.addEventListener("keydown", e => {
   if (viewMode !== "experience" || cartDrawer.classList.contains("open") || introOverlay.classList.contains("open")) return;
-  if (event.key === "ArrowDown") nextProduct();
-  if (event.key === "ArrowUp") previousProduct();
-  if (event.key === "ArrowRight") nextMedia();
-  if (event.key === "ArrowLeft") previousMedia();
+  if (e.key === "ArrowDown") nextProduct();
+  if (e.key === "ArrowUp") previousProduct();
+  if (e.key === "ArrowRight") nextMedia();
+  if (e.key === "ArrowLeft") previousMedia();
 });
 
 let wheelLocked = false;
-feed.addEventListener("wheel", event => {
-  if (viewMode !== "experience" || wheelLocked || Math.abs(event.deltaY) < 15) return;
+feed.addEventListener("wheel", e => {
+  if (viewMode !== "experience" || wheelLocked || Math.abs(e.deltaY) < 15) return;
   wheelLocked = true;
-  event.deltaY > 0 ? nextProduct() : previousProduct();
+  e.deltaY > 0 ? nextProduct() : previousProduct();
   setTimeout(() => { wheelLocked = false; }, 450);
 }, { passive: true });
 
-
-/* ==========================================================
-   INICIALIZAÇÃO
-   ========================================================== */
+/* INICIALIZAÇÃO */
 loadCart();
 renderCategories();
 renderProducts();
@@ -2500,6 +2177,5 @@ window.addEventListener("resize", () => {
   if (viewMode === "experience") updateView();
 });
 </script>
-
 </body>
 </html>
