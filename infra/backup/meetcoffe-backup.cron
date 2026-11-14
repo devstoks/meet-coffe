@@ -1,0 +1,2 @@
+# Copiar para /etc/cron.d/meetcoffe-backup  (roda todo dia às 04:10, horário de menor movimento)
+10 4 * * * root /srv/meetcoffe/infra/backup/backup.sh >/dev/null 2>&1

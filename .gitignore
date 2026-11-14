@@ -1,0 +1,26 @@
+# Dependências e builds
+node_modules/
+dist/
+dist-ssr/
+*.tsbuildinfo
+
+# Segredos: NUNCA versionar (use os arquivos .env.example como modelo)
+.env
+.env.*
+!.env.example
+
+# Prisma: o client é gerado (cd server && npx prisma generate)
+server/src/generated/
+
+# Dados e arquivos locais (fotos enviadas pelo painel, backups, sobras)
+uploads/
+*.sql
+*.tgz
+*.log
+_to_delete/
+
+# Sistema e editores
+.DS_Store
+.vscode/*
+!.vscode/extensions.json
+.idea

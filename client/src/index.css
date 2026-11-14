@@ -1,0 +1,73 @@
+@import "tailwindcss";
+
+@theme {
+  --color-moss: #354638;
+  --color-olive: #66745A;
+  --color-sage: #A5AD98;
+  --color-cream: #F5F1E8;
+  --color-sand: #E5DCCB;
+  --color-coffee: #574538;
+  --color-warm-white: #FCFAF5;
+
+  --font-serif: "Playfair Display", ui-serif, Georgia, serif;
+  --font-sans: "DM Sans", ui-sans-serif, system-ui, sans-serif;
+
+  --radius-xl2: 20px;
+}
+
+@layer base {
+  html,
+  body,
+  #root {
+    height: 100%;
+    margin: 0;
+    overscroll-behavior: none;
+  }
+
+  body {
+    background: var(--color-cream);
+    color: var(--color-moss);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  /* Toque direto: sem espera/zoom de toque duplo nos botões */
+  button,
+  [role="button"],
+  a {
+    touch-action: manipulation;
+  }
+}
+
+/* ===== Tema escuro do painel admin (mesmo padrão do feed) =====
+   Reaproveita as classes existentes (moss/cream/sand/...) remapeando as cores: o que era
+   "texto escuro" vira creme, o que era "fundo claro" vira vidro translúcido. */
+html.admin-dark {
+  --color-moss: #F5F1E8;
+  --color-cream: #1b120b;
+  --color-warm-white: rgba(255, 255, 255, 0.06);
+  --color-sand: rgba(255, 255, 255, 0.14);
+  --color-coffee: rgba(245, 241, 232, 0.72);
+  --color-olive: rgba(245, 241, 232, 0.6);
+  --color-sage: rgba(245, 241, 232, 0.45);
+  color-scheme: dark;
+}
+html.admin-dark { background: #150e08; }
+html.admin-dark #root { background: transparent; }
+html.admin-dark body {
+  background:
+    radial-gradient(1100px 560px at 85% -10%, rgba(150, 100, 55, 0.32), transparent 60%),
+    radial-gradient(900px 520px at -10% 105%, rgba(95, 110, 65, 0.22), transparent 60%),
+    #150e08;
+  background-attachment: fixed;
+  color: #F5F1E8;
+}
+html.admin-dark .font-serif {
+  font-family: var(--font-sans);
+  font-weight: 650;
+  letter-spacing: -0.015em;
+}
+html.admin-dark .bg-warm-white { backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); }
+html.admin-dark input, html.admin-dark select, html.admin-dark textarea { color-scheme: dark; }
+html.admin-dark ::placeholder { color: rgba(245, 241, 232, 0.4); }

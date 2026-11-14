@@ -1,0 +1,262 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Business {
+  id              String                  @id @default(cuid())
+  name            String
+  slug            String                  @unique
+  description     String?
+  whatsapp        String?
+  instagram       String?
+  googleReviewUrl String?
+  createdAt       DateTime                @default(now())
+  tables          CafeTable[]
+  products        Product[]
+  categories      Category[]
+  sessions        TableSession[]
+  tabs            Tab[]
+  orders          Order[]
+  adminUsers      AdminUser[]
+  paymentAccount  BusinessPaymentAccount?
+  terminals       BusinessTerminal[]
+  payments        Payment[]
+  closureRequests ClosureRequest[]
+}
+
+model AdminUser {
+  id           String   @id @default(cuid())
+  businessId   String
+  name         String
+  email        String   @unique
+  passwordHash String
+  role         String   @default("STAFF")
+  active       Boolean  @default(true)
+  createdAt    DateTime @default(now())
+  business     Business @relation(fields: [businessId], references: [id])
+}
+
+model CafeTable {
+  id           String         @id @default(cuid())
+  businessId   String
+  number       String
+  nfcPublicId  String         @unique
+  qrIdentifier String         @unique
+  status       String         @default("AVAILABLE")
+  business     Business       @relation(fields: [businessId], references: [id])
+  sessions     TableSession[]
+  tabs         Tab[]
+  orders       Order[]
+  closureRequests ClosureRequest[]
+}
+
+model TableSession {
+  id            String        @id @default(cuid())
+  businessId    String
+  tableId       String
+  tokenHash     String
+  status        String        @default("OPEN")
+  authorizedAt  DateTime?
+  openedAt      DateTime      @default(now())
+  closedAt      DateTime?
+  rating        Int?
+  ratingComment String?
+  ratedAt       DateTime?
+  business      Business      @relation(fields: [businessId], references: [id])
+  table         CafeTable     @relation(fields: [tableId], references: [id])
+  tabs          Tab[]
+  orders        Order[]
+  accesses      SessionAccess[]
+  closureRequests ClosureRequest[]
+}
+
+/// Formato de cardápio que cada participante (celular) escolheu ao entrar na mesa: FEED ou LIST.
+model MenuViewChoice {
+  id         String   @id @default(cuid())
+  businessId String
+  sessionId  String
+  deviceId   String
+  view       String   // FEED | LIST
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@unique([sessionId, deviceId])
+  @@index([businessId, view])
+}
+
+model SessionAccess {
+  id               String       @id @default(cuid())
+  sessionId        String
+  tokenHash        String
+  deviceIdentifier String?
+  createdAt        DateTime     @default(now())
+  revokedAt        DateTime?
+  session          TableSession @relation(fields: [sessionId], references: [id])
+}
+
+model Tab {
+  id          String       @id @default(cuid())
+  businessId  String
+  sessionId   String
+  tableId     String
+  status      String       @default("OPEN")
+  totalAmount Decimal      @db.Decimal(10, 2) @default(0)
+  openedAt    DateTime     @default(now())
+  closedAt    DateTime?
+  business    Business     @relation(fields: [businessId], references: [id])
+  session     TableSession @relation(fields: [sessionId], references: [id])
+  table       CafeTable    @relation(fields: [tableId], references: [id])
+  orders      Order[]
+  payments    Payment[]
+}
+
+model Order {
+  id             String       @id @default(cuid())
+  businessId     String
+  tabId          String
+  sessionId      String
+  tableId        String
+  customerName   String?
+  deviceId       String?
+  status         String       @default("SENT")
+  totalAmount    Decimal      @db.Decimal(10, 2)
+  idempotencyKey String       @unique
+  createdAt      DateTime     @default(now())
+  business       Business     @relation(fields: [businessId], references: [id])
+  tab            Tab          @relation(fields: [tabId], references: [id])
+  session        TableSession @relation(fields: [sessionId], references: [id])
+  table          CafeTable    @relation(fields: [tableId], references: [id])
+  items          OrderItem[]
+}
+
+model OrderItem {
+  id                  String  @id @default(cuid())
+  orderId             String
+  productId           String
+  productNameSnapshot String
+  unitPriceSnapshot   Decimal @db.Decimal(10, 2)
+  quantity            Int
+  subtotal            Decimal @db.Decimal(10, 2)
+  observations        String?
+  // Personalização escolhida pelo cliente (snapshot): [{ groupId, groupName, optionId, optionName, variantId?, variantName?, priceDelta }]
+  selections          Json?
+  order               Order   @relation(fields: [orderId], references: [id])
+}
+
+model Category {
+  id         String    @id @default(cuid())
+  businessId String
+  name       String
+  createdAt  DateTime  @default(now())
+  business   Business  @relation(fields: [businessId], references: [id])
+  products   Product[]
+
+  @@unique([businessId, name])
+  @@index([businessId])
+}
+
+model Product {
+  id          String   @id @default(cuid())
+  businessId  String
+  name        String
+  description String?
+  price       Decimal  @db.Decimal(10, 2)
+  // Legado: nome da categoria em texto. Mantido como ESPELHO de Category.name
+  // (atualizado ao renomear) para compatibilidade e rollback seguro. Não remover sem migração própria.
+  category    String
+  categoryId  String?
+  categoryRef Category? @relation(fields: [categoryId], references: [id], onDelete: Restrict)
+  images      String[] @default([]) // Array de até 3 imagens
+  videoPath   String?  // 1 vídeo
+  // Opções de personalização (kit/sabor/recheio): [{ id, name, required, options: [{ id, name, priceDelta?, variantLabel?, variants?: [{ id, name }] }] }]
+  optionGroups Json?
+  active      Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  business    Business @relation(fields: [businessId], references: [id])
+}
+
+model BusinessPaymentAccount {
+  id                    String               @id @default(cuid())
+  businessId            String               @unique
+  provider              String               @default("MERCADO_PAGO")
+  mpUserId              String
+  accessTokenEncrypted  String
+  refreshTokenEncrypted String?
+  tokenExpiresAt        DateTime?
+  status                String               @default("ACTIVE")
+  createdAt             DateTime             @default(now())
+  business              Business             @relation(fields: [businessId], references: [id])
+  terminals             BusinessTerminal[]
+}
+
+model BusinessTerminal {
+  id               String                 @id @default(cuid())
+  businessId       String
+  paymentAccountId String
+  terminalId       String
+  storeId          String?
+  posId            String?
+  nickname         String?
+  operatingMode    String                 @default("PDV")
+  active           Boolean                @default(true)
+  business         Business               @relation(fields: [businessId], references: [id])
+  paymentAccount   BusinessPaymentAccount @relation(fields: [paymentAccountId], references: [id])
+}
+
+model Payment {
+  id                String   @id @default(cuid())
+  businessId        String
+  tabId             String
+  scope             String   @default("FULL") // FULL = mesa toda | PARTIAL = só uma parte
+  deviceId          String?  // deviceId do celular que solicitou (se PARTIAL)
+  customerName      String?  // nome do cliente que solicitou (se PARTIAL)
+  provider          String   @default("MERCADO_PAGO")
+  status            String   @default("CREATED")
+  amount            Decimal  @db.Decimal(10, 2)
+  mpOrderId         String?  @unique
+  externalReference String   @unique
+  terminalId        String?
+  idempotencyKey    String   @unique
+  approvedAt        DateTime?
+  createdAt         DateTime @default(now())
+  business          Business @relation(fields: [businessId], references: [id])
+  tab               Tab      @relation(fields: [tabId], references: [id])
+}
+
+model WebhookEvent {
+  id            String    @id @default(cuid())
+  provider      String    @default("MERCADO_PAGO")
+  externalId    String    @unique
+  eventType     String
+  payload       Json
+  processedAt   DateTime?
+  createdAt     DateTime  @default(now())
+}
+
+// Solicitação de encerramento feita pelo cliente: individual (só a comanda dele) ou da mesa toda.
+// A forma de pagamento escolhida NÃO confirma pagamento: o status só vira PAID quando a equipe/maquininha confirma.
+model ClosureRequest {
+  id            String       @id @default(cuid())
+  businessId    String
+  sessionId     String
+  tableId       String
+  scope         String       // INDIVIDUAL | TABLE
+  deviceId      String?      // celular que pediu (INDIVIDUAL) ou que iniciou o pedido (TABLE)
+  customerName  String?
+  paymentMethod String       // DEBIT | CREDIT | PIX | CASH
+  status        String       @default("AWAITING_PAYMENT") // AWAITING_PAYMENT | PAID | CANCELLED
+  amount        Decimal      @db.Decimal(10, 2) // valor (com taxa) no momento do pedido
+  createdAt     DateTime     @default(now())
+  resolvedAt    DateTime?
+  business      Business     @relation(fields: [businessId], references: [id])
+  session       TableSession @relation(fields: [sessionId], references: [id])
+  table         CafeTable    @relation(fields: [tableId], references: [id])
+
+  @@index([businessId, status])
+  @@index([sessionId, status])
+}
